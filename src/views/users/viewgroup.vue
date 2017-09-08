@@ -1,37 +1,34 @@
 <template>
     <div>
-        <el-card>
-            <div class="head-lavel">
-                <div class="table-search">
-                    <el-input
-                            placeholder="搜索 ..."
-                            icon="search"
-                            v-model="searchdata"
-                            @keyup.enter.native="searchClick"
-                            :on-icon-click="searchClick">
-                    </el-input>
-                </div>
+        <div class="head-lavel">
+            <div class="table-search">
+                <el-input
+                        placeholder="搜索 ..."
+                        icon="search"
+                        v-model="searchdata"
+                        @keyup.enter.native="searchClick"
+                        :on-icon-click="searchClick">
+                </el-input>
             </div>
-            <div>
-                <el-table :data="tableData" border style="width: 100%">
-                    <el-table-column prop='username' label='用户名' sortable='custom'></el-table-column>
-                    <el-table-column prop='name' label='姓名' sortable='custom'></el-table-column>
-                    <el-table-column prop='roles' label='角色' sortable='custom'></el-table-column>
-                </el-table>
-            </div>
-            <div class="table-pagination">
-                <el-pagination
-                        small
-                        @size-change="handleSizeChange"
-                        @current-change="handleCurrentChange"
-                        :current-page.sync="currentPage"
-                        :page-sizes="pagesize"
-                        :page-size="limit"
-                        layout="prev, pager, next, sizes"
-                        :total="tabletotal">
-                </el-pagination>
-            </div>
-        </el-card>
+        </div>
+        <div>
+            <el-table :data="tableData" border style="width: 100%">
+                <el-table-column prop='username' label='用户名' sortable='custom'></el-table-column>
+                <el-table-column prop='name' label='姓名' sortable='custom'></el-table-column>
+                <el-table-column prop='roles' label='角色' sortable='custom'></el-table-column>
+            </el-table>
+        </div>
+        <div class="table-pagination">
+            <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPage"
+                    :page-sizes="pagesize"
+                    :page-size="limit"
+                    layout="prev, pager, next, sizes"
+                    :total="tabletotal">
+            </el-pagination>
+        </div>
     </div>
 </template>
 

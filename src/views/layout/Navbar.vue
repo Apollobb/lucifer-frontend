@@ -6,8 +6,10 @@
             <screenfull class='screenfull'></screenfull>
             <el-dropdown class="avatar-container" trigger="hover">
                 <div class="avatar-wrapper">
-                    <el-button class="username" type="success">{{username}}</el-button>
-                    <i class="el-icon-caret-bottom"></i>
+                    <el-button class="username" type="success">
+                        {{username}}
+                        <i class="el-icon-caret-bottom el-icon--right"></i>
+                    </el-button>
                 </div>
                 <el-dropdown-menu class="user-dropdown" slot="dropdown">
                     <el-dropdown-item @click.native="changeava=true" :disabled="true">
@@ -160,7 +162,7 @@
             position: absolute;
             right: 120px;
             top: 16px;
-            color: red;
+            color: #e7fff8;
         }
         .avatar-container {
             height: 50px;
@@ -171,6 +173,7 @@
                 cursor: pointer;
                 margin-top: 5px;
                 position: relative;
+                right: -20px;
                 .user-avatar {
                     width: 40px;
                     height: 40px;
@@ -178,12 +181,6 @@
                 }
                 .username {
                     border-radius: 10px;
-                }
-                .el-icon-caret-bottom {
-                    position: absolute;
-                    right: -20px;
-                    top: 25px;
-                    font-size: 12px;
                 }
             }
         }

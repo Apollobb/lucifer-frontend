@@ -2,10 +2,29 @@ html {
     background: url('../../assets/bg.jpg');
 }
 
-.el-menu {
-    background: rgba(3, 1, 1, 0.72)
+.el-menu--dark {
+    background: rgba(3, 1, 1, 0.5)
 }
 
-.el-menu--dark .el-submenu .el-menu {
-    background: rgba(3, 1, 1, 0.5)
+.el-menu-item {
+    background: rgba(3, 1, 1, 0.85)
+}
+
+.el-card {
+    border: 0;
+    background: rgba(3, 0, 1, 0.9)
+
+}
+
+.el-dialog {
+    background: rgba(3, 1, 1, 0.71)
+}
+
+.el-dialog .el-form-item label{
+    color: #58ff28;
+    font-weight: 100;
+}
+
+.el-breadcrumb__item__inner a{
+    color: rgba(5, 97, 255, 0.73);
 }

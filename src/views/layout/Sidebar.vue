@@ -1,6 +1,6 @@
 <template>
     <el-menu mode="vertical" theme="dark" :default-active="$route.path" :unique-opened="true">
-        <div class="logo">cmdb</div>
+        <div class="logo">Metero</div>
         <sidebar-item :routes='$router.options.routes'></sidebar-item>
     </el-menu>
 </template>
@@ -22,7 +22,7 @@
         text-align: center;
         display: table-cell;
         vertical-align: middle;
-        color: #1c8de0;
+        color: #e015bd;
         padding-left: 60px;
     }
 </style>

@@ -35,7 +35,6 @@
             </div>
             <div class="table-pagination">
                 <el-pagination
-                        small
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
                         :current-page.sync="currentPage"
@@ -47,7 +46,7 @@
             </div>
         </el-card>
 
-        <el-dialog title="新建角色对象" :visible.sync="addForm" size="tiny">
+        <el-dialog :visible.sync="addForm" size="tiny">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="角色名" prop="name">
                     <el-input v-model="ruleForm.name"></el-input>
@@ -62,11 +61,11 @@
             </el-form>
         </el-dialog>
 
-        <el-dialog title="查看" :visible.sync="viewForm" size="tiny">
+        <el-dialog :visible.sync="viewForm" size="tiny">
             <view-role :groupName="roleName"></view-role>
         </el-dialog>
 
-        <el-dialog title="编辑" :visible.sync="editForm" size="small">
+        <el-dialog :visible.sync="editForm" size="small">
             <edit-role :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-role>
         </el-dialog>
     </div>

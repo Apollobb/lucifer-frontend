@@ -46,7 +46,6 @@
                 </div>
                 <div class="table-pagination">
                     <el-pagination
-                            small
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
                             :current-page.sync="currentPage"
@@ -58,10 +57,10 @@
                 </div>
             </div>
         </el-card>
-        <el-dialog title="新建用户" :visible.sync="addForm" size="small">
+        <el-dialog :visible.sync="addForm" size="small">
             <add-user @DialogStatus="getDialogStatus"></add-user>
         </el-dialog>
-        <el-dialog title="编辑用户" :visible.sync="editForm" size="small">
+        <el-dialog :visible.sync="editForm" size="small">
             <edit-user :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-user>
         </el-dialog>
     </div>

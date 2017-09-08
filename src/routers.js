@@ -113,9 +113,10 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // console.log('to=', to.fullPath, '| from=', from.fullPath);
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        let userinfo = localStorage.getItem('userinfo');
-        localStorage.setItem('username', JSON.parse(userinfo).name);
-        if (Object.keys(userinfo).length>0) {
+        let userinfo = JSON.parse(localStorage.getItem('userinfo'));
+        localStorage.setItem('username', userinfo.name);
+        //console.log(userinfo);
+        if (userinfo instanceof Object) {
             next();
         } else {
             next({
