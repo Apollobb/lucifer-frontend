@@ -158,7 +158,7 @@
             },
             handleEdit(row){
                 this.editForm = true;
-                this.rowdata = row
+                this.rowdata = row;
             },
             deleteGroup(id){
                 deleteRole(id).then(response => {

@@ -7,7 +7,7 @@
             <el-input v-model="rowdata.comment"></el-input>
         </el-form-item>
         <div>
-            <sesect-users :selecthost="rowdata.user" @gethosts="getHosts"></sesect-users>
+            <sesect-users :selectdata="rowdata" title="选择用户" @getSelectData="getDatas"></sesect-users>
         </div>
         <el-form-item>
             <el-button type="primary" @click="putForm('ruleForm')">提交</el-button>
@@ -17,7 +17,7 @@
 </template>
 <script>
     import {deleteRole, putRole, putStaffRole} from 'api/user';
-    import sesectUsers from '../components/datatransfer.vue'
+    import sesectUsers from '../components/usertransfer.vue'
 
     export default {
         components: {sesectUsers},
@@ -38,13 +38,13 @@
         },
 
         created() {
-            this.getGroups();
+            this.getDatas();
         },
         methods: {
             putForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        putJob(this.rowdata.id, this.rowdata).then(response => {
+                        putRole(this.rowdata.id, this.rowdata).then(response => {
                             if (response.statusText = 'ok') {
                                 this.$message({
                                     type: 'success',
@@ -73,13 +73,8 @@
                     }
                 });
             },
-            getHosts(data) {
-                this.rowdata.hosts = data
-            },
-            getGroups() {
-                getJobGroupList().then(response => {
-                    this.groups = response.data.results;
-                })
+            getDatas(data) {
+                this.rowdata.users = data
             },
         }
     }

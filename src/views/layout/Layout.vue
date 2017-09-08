@@ -1,35 +1,63 @@
 <template>
-    <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
-        <div class="sidebar-wrapper">
-            <Sidebar class="sidebar-container" />
-        </div>
-        <div class="main-container">
-            <Navbar/>
-            <App-main/>
+    <div>
+        <vue-particles class="particles"
+                       color="#ffffff"
+                       :particleOpacity="0.7"
+                       :particlesNumber="80"
+                       shapeType="circle"
+                       :particleSize="4"
+                       linesColor="#e71fff"
+                       :linesWidth="2"
+                       :lineLinked="true"
+                       :lineOpacity="0.4"
+                       :linesDistance="150"
+                       :moveSpeed="3"
+                       :hoverEffect="true"
+                       hoverMode="grab"
+                       :clickEffect="true"
+                       clickMode="push"
+        >
+        </vue-particles>
+        <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
+            <div class="sidebar-wrapper">
+                <Sidebar class="sidebar-container"/>
+            </div>
+            <div class="main-container">
+                <Navbar/>
+                <App-main/>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import { Navbar, Sidebar, AppMain } from 'views/layout';
+    import {Navbar, Sidebar, AppMain} from 'views/layout';
 
     export default {
-      name: 'layout',
-      components: {
-        Navbar,
-        Sidebar,
-        AppMain
-      },
-      computed: {
-        sidebar() {
-          return this.$store.state.app.sidebar;
+        name: 'layout',
+        components: {
+            Navbar,
+            Sidebar,
+            AppMain
+        },
+        computed: {
+            sidebar() {
+                return this.$store.state.app.sidebar;
+            }
         }
-      }
     }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
     @import "src/styles/mixin.scss";
+
+    .particles {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        color: #ffffff;
+    }
+
     .app-wrapper {
         @include clearfix;
         position: relative;
@@ -48,7 +76,7 @@
                     }
                 }
             }
-            .main-container{
+            .main-container {
                 margin-left: 40px;
             }
         }

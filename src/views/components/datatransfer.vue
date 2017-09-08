@@ -1,80 +1,35 @@
 <template>
-    <div>
-        <div class="item-title">选择主机</div>
-        <div class="host-select">
-            <el-transfer
-                    v-model="value"
-                    filterable
-                    :titles="['未选择', '已选择']"
-                    :button-texts="['滚回来', '滚过去']"
-                    :footer-format="{noChecked: '${total}',hasChecked: '${checked}/${total}'}"
-                    @change="handleChange"
-                    :data="allhost">
-                <el-button type="info" class="transfer-footer" slot="left-footer" size="small" @click="hostData">重置数据</el-button>
-            </el-transfer>
-        </div>
-    </div>
+    <el-transfer
+            filterable
+            v-model="value"
+            :data="data">
+    </el-transfer>
 </template>
 
 <script>
-    import {getHostList} from 'api/asset';
     export default {
-        props: ['selecthost'],
         data() {
             return {
-                allhost: [],
-                value: this.selecthost,
-                changedata: false
-            };
+                data: [],
+                value: [],
+            }
         },
-
         created() {
-            this.hostData();
+            this.generateData();
         },
 
         methods: {
-            hostData() {
-                this.allhost = [];
-                this.value = this.selecthost;
-                const parms = {
-                    status: "used"
-                };
-                getHostList(parms).then(response => {
-                    const results = response.data.results;
-                    for (var i = 0, len = results.length; i < len; i++) {
-                        this.allhost.push({
-                            key: results[i].hostname,
-                        });
-                    }
-                });
-            },
-            handleChange(value, direction, movedKeys) {
-                this.$emit('gethosts', value);
+            generateData () {
+                const cities = ['上海', '北京', '广州', '深圳', '南京', '西安', '成都'];
+                for (var i = 0, len = cities.length; i < len; i++) {
+                    console.log(cities[i]);
+                    this.data.push({
+                        label: cities[i],
+                        key: i
+                    })
+                }
+                console.log(this.data)
             }
         }
-    };
+    }
 </script>
-
-<style>
-    .item-title {
-        font-weight: 600;
-        text-align: right;
-        vertical-align: middle;
-        float: left;
-        font-size: 14px;
-        color: #48576a;
-        line-height: 1;
-        padding: 11px 9px;
-        margin-left: 25px;
-        box-sizing: border-box;
-    }
-
-    .host-select {
-        margin-bottom: 20px;
-    }
-
-    .transfer-footer {
-        margin-left: 20px;
-        padding: 6px 5px;
-    }
-</style>
