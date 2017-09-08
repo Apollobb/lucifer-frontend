@@ -15,7 +15,13 @@
                 </div>
             </div>
             <div>
-                <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
+                <el-table
+                        :data="tableData"
+                        border
+                        @selection-change="handleSelectionChange"
+                        header-align="center"
+                        alignn="center"
+                >
                     <el-table-column type="selection"></el-table-column>
                     <el-table-column prop='name' label='用户名' sortable>
                         <template scope="scope">
