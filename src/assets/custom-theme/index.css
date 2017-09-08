@@ -9,10 +9,13 @@ html {
 .el-menu-item {
     background: rgba(3, 1, 1, 0.85)
 }
-
+.el-menu.navbar.el-menu--horizontal {
+    border-radius: 5px!important;
+}
 .el-table {
-    border: 1px solid #1279d2;
+    border: 0;
     background-color: #4AB7BD;
+    border-radius: 5px;
 }
 
 .table-pagination {
