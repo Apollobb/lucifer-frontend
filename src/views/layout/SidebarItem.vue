@@ -50,7 +50,7 @@
         margin-right: 10px;
     }
     .child-icon {
-        color: #58ff28;
+        color: rgba(88, 255, 40, 0.38);
         margin-right: 10px;
     }
     .hideSidebar .menu-indent {
