@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <el-card>
+    <div class="body-main">
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="addGroup=true">新建主机组</el-button>
@@ -38,7 +37,6 @@
                         :total="tabletotal">
                 </el-pagination>
             </div>
-        </el-card>
         <el-dialog title="新建主机组" :visible.sync="addGroup" size="tiny">
             <add-group @formdata="addGroupSubmit"></add-group>
         </el-dialog>
@@ -148,11 +146,6 @@
     }
 
     .table-search {
-        float: right;
-    }
-
-    .table-pagination {
-        padding: 10px 0;
         float: right;
     }
 </style>

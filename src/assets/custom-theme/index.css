@@ -10,10 +10,19 @@ html {
     background: rgba(3, 1, 1, 0.85)
 }
 
-.el-card {
-    border: 0;
-    background: rgba(3, 0, 1, 0.9)
+.el-table {
+    border: 1px solid #1279d2;
+    background-color: #4AB7BD;
+}
 
+.table-pagination {
+    padding-top: 10px;
+    margin-right: -13px;
+    float: right;
+}
+
+.body-main {
+    padding: 20px;
 }
 
 .el-dialog {
@@ -25,6 +34,6 @@ html {
     font-weight: 100;
 }
 
-.el-breadcrumb__item__inner a{
+.el-breadcrumb__item__inner a {
     color: rgba(5, 97, 255, 0.73);
 }

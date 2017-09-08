@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <el-card>
+    <div class="body-main">
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="addForm=true">新建用户</el-button>
@@ -56,7 +55,6 @@
                     </el-pagination>
                 </div>
             </div>
-        </el-card>
         <el-dialog :visible.sync="addForm" size="small">
             <add-user @DialogStatus="getDialogStatus"></add-user>
         </el-dialog>
@@ -184,10 +182,5 @@
     .table-search {
         float: right;
         padding: 10px 0;
-    }
-
-    .table-pagination {
-        padding: 10px 0;
-        float: right;
     }
 </style>

@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <el-card>
+    <div class="body-main">
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="handleCreate">新建项目</el-button>
@@ -68,7 +67,6 @@
                         :total="tabletotal">
                 </el-pagination>
             </div>
-        </el-card>
 
         <el-dialog title="添加新主机" :visible.sync="addForm" size="small">
             <add-host @DialogStatus="getDialogStatus"></add-host>

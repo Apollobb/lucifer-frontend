@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
         <vue-particles class="particles"
                        color="#ffffff"
                        :particleOpacity="0.7"
@@ -18,14 +18,12 @@
                        clickMode="push"
         >
         </vue-particles>
-        <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
-            <div class="sidebar-wrapper">
-                <Sidebar class="sidebar-container"/>
-            </div>
-            <div class="main-container">
-                <Navbar/>
-                <App-main/>
-            </div>
+        <div class="sidebar-wrapper">
+            <Sidebar class="sidebar-container"/>
+        </div>
+        <div class="main-container">
+            <Navbar/>
+            <App-main/>
         </div>
     </div>
 </template>
@@ -56,6 +54,7 @@
         height: 100%;
         width: 100%;
         color: #ffffff;
+        z-index: -1;
     }
 
     .app-wrapper {

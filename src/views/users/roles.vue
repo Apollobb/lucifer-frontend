@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <el-card>
+    <div class="body-main">
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="addForm=true">新建角色对象</el-button>
@@ -44,7 +43,6 @@
                         :total="tabletotal">
                 </el-pagination>
             </div>
-        </el-card>
 
         <el-dialog :visible.sync="addForm" size="tiny">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -199,11 +197,6 @@
     }
 
     .table-search {
-        float: right;
-    }
-
-    .table-pagination {
-        padding: 10px 0;
         float: right;
     }
 </style>
