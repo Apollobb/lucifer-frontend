@@ -14,8 +14,12 @@ html {
 }
 .el-table {
     border: 0;
-    background-color: #4AB7BD;
+    background-color: transparent;
     border-radius: 5px;
+    color: #fff;
+}
+.el-table tr, .el-table th,.el-table th>.cell{
+    background-color: transparent!important;
 }
 
 .table-pagination {
