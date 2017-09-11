@@ -1,5 +1,5 @@
 <template>
-  <div style="background:#f0f2f5;margin-top: -20px;">
+  <div style="margin-top: -20px;">
     <div class="wscn-http404">
       <div class="pic-404">
         <img class="pic-404__parent" src="../../assets/404.png" alt="404">
@@ -22,7 +22,7 @@
   export default {
     computed: {
       message() {
-        return '特朗普说这个页面你不能进......'
+        return '光哥说这个页面你不能进......'
       }
     }
   }

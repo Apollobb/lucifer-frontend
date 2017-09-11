@@ -50,7 +50,7 @@
                     <el-input v-model="ruleForm.name"></el-input>
                 </el-form-item>
                 <el-form-item label="描述" prop="comment">
-                    <el-input v-model="ruleForm.desc"></el-input>
+                    <el-input v-model="ruleForm.comment"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="addGroupSubmit('ruleForm')">立即创建</el-button>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-    import {getRoleList, postRole, deleteRole} from 'api/user';
+    import {getRoleList, postRole} from 'api/user';
     import {LIMIT} from '@/config'
     import viewRole from './viewgroup.vue'
     import editRole from './editrole.vue'
@@ -157,17 +157,6 @@
             handleEdit(row){
                 this.editForm = true;
                 this.rowdata = row;
-            },
-            deleteGroup(id){
-                deleteRole(id).then(response => {
-                    this.$message({
-                        message: '恭喜你，删除成功',
-                        type: 'success'
-                    });
-                }).catch(error => {
-                    this.$message.error('删除失败');
-                    console.log(error);
-                });
             },
             searchClick() {
                 this.fetchData();

@@ -49,6 +49,8 @@ export const routes = [
         icon: 'user',
         meta: {requiresAuth: true},
         children: [
+            {path: 'staffperm', component: require('@/views/permissions/staffpermissions'), name: '用户权限'},
+            {path: 'roleperm', component: require('@/views/permissions/rolepermissions'), name: '角色权限'},
         ]
     },
     {
@@ -94,7 +96,7 @@ export const routes = [
         meta: {requiresAuth: true},
         children: [
             {path: 'duty', component: require('@/views/tools/duty'), name: '值班交接'},
-            {path: 'upload', component: require('@/views/tools/upload'), name: '上传管理'},
+            {path: 'record', component: require('@/views/tools/record'), name: '操作记录'},
         ]
     },
     {path: '*', redirect: '/404', hidden: true}
@@ -111,12 +113,11 @@ const router = new VueRouter({
 // 每个路由皆会的钩子函数
 // to 进入 from 离开 next 传递
 router.beforeEach((to, from, next) => {
-    // console.log('to=', to.fullPath, '| from=', from.fullPath);
+    //console.log('to=', to.fullPath, '| from=', from.fullPath);
     if (to.matched.some(record => record.meta.requiresAuth)) {
         let userinfo = JSON.parse(localStorage.getItem('userinfo'));
-        localStorage.setItem('username', userinfo.name);
-        //console.log(userinfo);
         if (userinfo instanceof Object) {
+            localStorage.setItem('username', userinfo.name);
             next();
         } else {
             next({
@@ -124,7 +125,7 @@ router.beforeEach((to, from, next) => {
             });
         }
     } else {
-        next(); // 确保一定要调用 next()
+        next();
     }
 })
 

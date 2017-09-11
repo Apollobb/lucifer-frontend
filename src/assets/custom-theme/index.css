@@ -12,22 +12,25 @@ html {
 .el-menu.navbar.el-menu--horizontal {
     border-radius: 5px!important;
 }
+
+/* 表格透明 */
 .el-table {
     background-color: transparent;  /*透明*/
     border-radius: 5px;
 }
- .el-table th,.el-table th>.cell {
-     color: #fff;
-    background: rgba(3, 1, 1, 0.27)
- }
-.el-table tr{
-    color: #eef1f6;
-    background: rgba(3, 1, 1, 0.53)
-    /*background-color: transparent;   透明*/
-}
-.el-table__row:hover {
-    background-color: rgba(3, 1, 1, 0.85)
-}
+ /*.el-table th,.el-table th>.cell {*/
+     /*color: #fff;*/
+    /*background: rgba(3, 1, 1, 0.27)*/
+ /*}*/
+/*.el-table tr{*/
+    /*color: #eef1f6;*/
+    /*background: rgba(3, 1, 1, 0.53)*/
+    /*!*background-color: transparent;   透明*!*/
+/*}*/
+/*.el-table__row:hover {*/
+    /*background-color: rgba(3, 1, 1, 0.85)*/
+/*}*/
+
 .table-pagination {
     padding-top: 10px;
     margin-right: -13px;

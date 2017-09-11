@@ -30,7 +30,7 @@ module.exports = {
     login: `${url}/login/`,
     changePassword: `${url}/api/changepasswd/`,
 
-    //用户
+    //用户角色
     users: `${url}/userpermission/staffs/`,
     staffmodify: `${url}/userpermission/staffmodify/`,
 
@@ -43,6 +43,7 @@ module.exports = {
     staffroles: `${url}/userpermission/staffroles/`,
     staffrolemodify: `${url}/userpermission/staffrolemodify/`,
 
+    //权限
     rolepermissions: `${url}/userpermission/rolepermissions/`,
     rolepermissionmodify: `${url}/userpermission/rolepermissionmodify/`,
 
@@ -78,6 +79,9 @@ module.exports = {
     dutysheets: `${url}/dailymanage/dutysheets/`,
     dutysheetmodify: `${url}/dailymanage/dutysheetmodify/`,
 
+    //操作日志
+    operaterecords: `${url}/operaterecord/operaterecords/`,
+
     //日志分析
     //用户设备查询
     agents: `${url}/loganalysis/agents/`,
@@ -91,8 +95,4 @@ module.exports = {
     statuses: `${url}/loganalysis/statuses/`,
     //Nginx后台转发查询
     upstreams: `${url}/loganalysis/upstreams/`,
-
-
-    //操作日志
-    operaterecords: `${url}/operaterecord/operaterecords/`,
 };

@@ -2,100 +2,67 @@ import fetch from 'utils/fetch';
 import apiURL from '@/config'
 
 //users
-export function postUser(data) {
+export function postStaffPermissions(data) {
     return fetch({
-        url: apiURL.users,
+        url: apiURL.staffpermissions,
         method: 'post',
         data
     });
 }
 
-export function getUserList(query) {
+export function getStaffPermissions(query) {
     return fetch({
-        url: apiURL.users,
+        url: apiURL.staffpermissions,
         method: 'get',
         params: query
     });
 }
 
-export function patchUser(id, data) {
+export function putStaffPermissions(id, data) {
     console.log(data);
     return fetch({
-        url: apiURL.users + id + '/',
+        url: apiURL.staffpermissionmodify + id + '/',
         method: 'patch',
         data
     });
 }
 
-export function deleteUser(id) {
+export function deleteStaffPermissions(id) {
     return fetch({
-        url: apiURL.users + id,
-        method: 'delete',
-    });
-}
-
-
-//groups
-export function postGroup(data) {
-    console.log(data);
-    return fetch({
-        url: apiURL.groups,
-        method: 'post',
-        data
-    });
-}
-
-export function getGroupList(query) {
-    return fetch({
-        url: apiURL.groups,
-        method: 'get',
-        params: query
-    });
-}
-
-export function putGroup(id, data) {
-    return fetch({
-        url: apiURL.groups + id + '/',
-        method: 'put',
-        data
-    });
-}
-
-export function deleteGroup(id) {
-    return fetch({
-        url: apiURL.groups + id,
+        url: apiURL.staffpermissionmodify + id,
         method: 'delete',
     });
 }
 
 //roles
-export function postRole(data) {
+export function postRolePermissions(data) {
     return fetch({
-        url: apiURL.roles,
+        url: apiURL.rolepermissions,
         method: 'post',
         data
     });
 }
 
-export function getRoleList(query) {
+export function getRolePermissions(query) {
     return fetch({
-        url: apiURL.roles,
+        url: apiURL.rolepermissions,
         method: 'get',
         params: query
     });
 }
 
-export function putRole(id, data) {
+export function putRolePermissions(id, data) {
+    console.log(data);
     return fetch({
-        url: apiURL.roles + id + '/',
-        method: 'put',
+        url: apiURL.rolepermissionmodify + id + '/',
+        method: 'patch',
         data
     });
 }
 
-export function deleteRole(id) {
+export function deleteRolePermissions(id) {
     return fetch({
-        url: apiURL.roles + id,
+        url: apiURL.rolepermissionmodify + id,
         method: 'delete',
     });
 }

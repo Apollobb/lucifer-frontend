@@ -66,10 +66,15 @@
                 this.$alert('骚年，你确定要这么干！！', '删除', {
                     confirmButtonText: '确定',
                     callback: action => {
-                        this.$message({
-                            type: 'info',
-                            message: `action: ${ id }`
-                        });
+                        deleteRole(id).then(response => {
+                            this.$message({
+                                message: '恭喜你，删除成功',
+                                type: 'success'
+                            });
+                        }).catch(error => {
+                            this.$message.error('删除失败');
+                            console.log(error);
+                        })
                     }
                 });
             },

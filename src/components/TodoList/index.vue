@@ -2,7 +2,7 @@
   <section class="todoapp">
     <!-- header -->
     <header class="header">
-      <input class="new-todo" autofocus autocomplete="off" placeholder="TODO LIST?" @keyup.enter="addTodo">
+      <input class="new-todo" autofocus autocomplete="off" placeholder="添加新的计划" @keyup.enter="addTodo">
     </header>
     <!-- main section -->
     <section class="main" v-show="todos.length">
@@ -25,7 +25,7 @@
         </li>
       </ul>
       <button class="clear-completed" v-show="todos.length > remaining" @click="clearCompleted">
-        Clear completed
+        清除已完成
       </button>
     </footer>
   </section>
@@ -35,20 +35,19 @@
 import Todo from './Todo.vue'
 const STORAGE_KEY = 'todos'
 const filters = {
-  all: todos => todos,
-  active: todos => todos.filter(todo => !todo.done),
-  completed: todos => todos.filter(todo => todo.done)
+  所有: todos => todos,
+  未完成: todos => todos.filter(todo => !todo.done),
+  已完成: todos => todos.filter(todo => todo.done)
 }
 const defalutList = [
-  { text: 'star this repository', done: false },
-  { text: 'fork this repository', done: false },
-  { text: 'follow author', done: false }
+  { text: '塞两个高尔夫', done: false },
+  { text: '约会范冰冰', done: false },
 ]
 export default {
   components: { Todo },
   data() {
     return {
-      visibility: 'all',
+      visibility: '所有',
       filters,
       todos: JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || defalutList
     }
