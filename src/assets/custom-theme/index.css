@@ -13,11 +13,17 @@ html {
     border-radius: 5px!important;
 }
 
+.sidebar-container {
+    right: -200px;  /*侧边栏伸缩时，隐藏border*/
+}
+
 /* 表格透明 */
 .el-table {
     background-color: transparent;  /*透明*/
-    border-radius: 5px;
+    border-radius: 5px;   /* 边框圆角 */
 }
+
+/* 表格整体透明 */
  /*.el-table th,.el-table th>.cell {*/
      /*color: #fff;*/
     /*background: rgba(3, 1, 1, 0.27)*/

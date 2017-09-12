@@ -18,11 +18,11 @@ export function getUserList(query) {
     });
 }
 
-export function patchUser(id, data) {
+export function putUser(id, data) {
     console.log(data);
     return fetch({
-        url: apiURL.staffmodify + id + '/',
-        method: 'patch',
+        url: apiURL.staffmodify + id,
+        method: 'put',
         data
     });
 }
@@ -54,7 +54,7 @@ export function getGroupList(query) {
 
 export function putGroup(id, data) {
     return fetch({
-        url: apiURL.groupmodify + id + '/',
+        url: apiURL.groupmodify + id,
         method: 'put',
         data
     });
@@ -86,7 +86,7 @@ export function getRoleList(query) {
 
 export function putRole(id, data) {
     return fetch({
-        url: apiURL.rolemodify + id + '/',
+        url: apiURL.rolemodify + id,
         method: 'put',
         data
     });
@@ -118,7 +118,7 @@ export function getStaffRoleList(query) {
 
 export function putStaffRole(id, data) {
     return fetch({
-        url: apiURL.staffrolemodify + id + '/',
+        url: apiURL.staffrolemodify + id,
         method: 'put',
         data
     });

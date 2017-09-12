@@ -13,7 +13,7 @@
         </el-form-item>
         <el-form-item label="用户分组" prop="group">
             <el-select v-model="ruleForm.group" placeholder="请选择用户分组">
-                <el-option v-for="item in groups" :key="item.name" :value="item.name"></el-option>
+                <el-option v-for="item in groups" :key="item.name" :label="item.name" :value="item.id"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="联系电话" prop="telno">
@@ -63,7 +63,7 @@
                         {required: true, message: '请输入职位', trigger: 'blur'}
                     ],
                     group: [
-                        {required: true, message: '请选择用户组', trigger: 'change'},
+                        {required: true, type: 'number', message: '请选择用户组', trigger: 'change'},
                     ],
                     telno: [
                         {required: true, message: '请输入联系电话', trigger: 'blur'},

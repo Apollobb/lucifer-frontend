@@ -13,7 +13,7 @@
         </el-form-item>
         <el-form-item label="用户分组" prop="group">
             <el-select v-model="rowdata.group" placeholder="请选择用户分组">
-                <el-option v-for="item in groups" :key="item.name" :value="item.name"></el-option>
+                <el-option v-for="item in groups" :key="item.name" :label="item.name" :value="item.id"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="联系电话" prop="telno">
@@ -36,7 +36,7 @@
     </el-form>
 </template>
 <script>
-    import {patchUser, getGroupList, getRoleList} from 'api/user';
+    import {putUser, getGroupList, getRoleList} from 'api/user';
 
     export default {
         components: {},
@@ -56,7 +56,7 @@
                         {required: true, message: '请输入中文名', trigger: 'blur'}
                     ],
                     group: [
-                        {required: true, message: '请选择项目分组', trigger: 'change'},
+                        {required: true, type: 'number', message: '请选择项目分组', trigger: 'change'},
                     ],
                     telno: [
                         {required: true, message: '请输入联系电话', trigger: 'blur'},
@@ -74,7 +74,7 @@
             postForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        patchUser(this.rowdata.id, this.rowdata).then(response => {
+                        putUser(this.rowdata.id, this.rowdata).then(response => {
                             if (response.statusText = 'ok') {
                                 this.$message({
                                     type: 'success',
