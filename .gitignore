@@ -1,15 +1,8 @@
-*.pyc
-*.db
 .idea/
 .DS_Store
-.python-version
 node_modules/
 dist/
-upload/
-migrations/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 selenium-debug.log
-node_modules/
-dist/

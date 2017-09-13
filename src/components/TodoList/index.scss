@@ -1,16 +1,13 @@
 .todoapp {
 	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	line-height: 1.4em;
-	color: #58ff28;
+	color: #4d4d4d;
 	min-width: 230px;
 	max-width: 550px;
 	margin: 40PX auto 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-weight: 300;
-	a {
-		font-weight: 600;
-	}
 	button {
 		margin: 0;
 		padding: 0;
@@ -60,7 +57,7 @@
 		font-size: 100px;
 		font-weight: 100;
 		text-align: center;
-		color: rgba(88, 255, 40, 0.81);
+		color: rgba(175, 47, 47, 0.15);
 		-webkit-text-rendering: optimizeLegibility;
 		-moz-text-rendering: optimizeLegibility;
 		text-rendering: optimizeLegibility;
@@ -75,8 +72,9 @@
 		font-weight: inherit;
 		line-height: 1.4em;
 		border: 0;
+		color: inherit;
 		padding: 6px;
-		border: 1px solid #e015bd;
+		border: 1px solid #999;
 		box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
 		box-sizing: border-box;
 		-webkit-font-smoothing: antialiased;
@@ -84,8 +82,8 @@
 	}
 	.new-todo {
 		padding: 16px 16px 16px 60px;
-		border: 1px;
-		color: red;
+		border: none;
+		background: rgba(0, 0, 0, 0.003);
 		box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 	}
 	.main {
@@ -117,7 +115,7 @@
 		padding: 10px 27px 10px 27px;
 	}
 	.toggle-all:checked+label:before {
-		color: #0c1cff;
+		color: #737373;
 	}
 	.todo-list {
 		margin: 0;
@@ -202,7 +200,7 @@
 		transition: color 0.2s ease-out;
 	}
 	.todo-list li .destroy:hover {
-		color: #ff1324;
+		color: #af5b5e;
 	}
 	.todo-list li .destroy:after {
 		content: '×';
@@ -217,7 +215,7 @@
 		margin-bottom: -1px;
 	}
 	.footer {
-		color: #e71fff;
+		color: #777;
 		position: relative;
 		padding: 10px 15px;
 		height: 40px;
@@ -274,8 +272,6 @@
 		line-height: 20px;
 		text-decoration: none;
 		cursor: pointer;
-		font-weight: 700;
-		color: red;
 	}
 	.clear-completed:hover {
 		text-decoration: underline;
@@ -284,7 +280,7 @@
 		margin: 65px auto 0;
 		color: #bfbfbf;
 		font-size: 10px;
-		text-shadow: 0 1px 0 rgba(231, 31, 255, 0.5);
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 		text-align: center;
 	}
 	.info p {

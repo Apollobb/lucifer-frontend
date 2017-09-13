@@ -36,21 +36,35 @@
         </el-row>
 
         <el-row>
-            <el-col :span="8" class="dashboard">
+            <el-col :span="6">
+                <el-card class="box-card">
+                    <div slot="header" class="box-card-header">
+
+                    </div>
+                    <div class="info-item">
+
+                    </div>
+                    <div class="info-item">
+
+                    </div>
+                </el-card>
+            </el-col>
+
+            <el-col :span="8">
                 <pie-chart></pie-chart>
             </el-col>
 
-            <el-col :span="10" class="dashboard">
+            <el-col :span="10">
                 <bar-chart></bar-chart>
             </el-col>
         </el-row>
 
-        <el-row>
-            <el-col :span="8" class="dashboard">
-                <todo-list></todo-list>
-            </el-col>
-            <el-col :span="10" class="dashboard">
+        <el-row :gutter="20">
+            <el-col :span="15">
                 <line-chart></line-chart>
+            </el-col>
+            <el-col :span="9">
+                <todo-list></todo-list>
             </el-col>
         </el-row>
 
@@ -91,9 +105,5 @@
                 margin-left: 15px;
             }
         }
-    }
-    .dashboard {
-        background-color: white;
-        margin: 20px;
     }
 </style>

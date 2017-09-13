@@ -1,6 +1,6 @@
 <template>
     <el-menu mode="vertical" theme="dark" :default-active="$route.path" :unique-opened="true">
-        <div class="logo">Metero</div>
+        <div class="logo">Lucifer</div>
         <sidebar-item :routes='$router.options.routes'></sidebar-item>
     </el-menu>
 </template>
@@ -22,7 +22,8 @@
         text-align: center;
         display: table-cell;
         vertical-align: middle;
-        color: #e015bd;
-        padding-left: 60px;
+        color: #e015d1;
+        font-weight: 700;
+        padding-left: 70px;
     }
 </style>

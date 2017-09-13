@@ -3,8 +3,8 @@
         <el-form-item label="组名" prop="name">
             <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="描述" prop="comment">
-            <el-input v-model="ruleForm.comment"></el-input>
+        <el-form-item label="描述" prop="desc">
+            <el-input v-model="ruleForm.desc"></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -18,14 +18,11 @@
             return {
                 ruleForm: {
                     name: '',
-                    comment: ''
+                    desc: ''
                 },
                 rules: {
                     name: [
                         {required: true, message: '请输入一个风骚的组名', trigger: 'blur'},
-                    ],
-                    comment: [
-                        {required: true, message: '请输入一个风骚的描述', trigger: 'blur'},
                     ]
                 }
             };

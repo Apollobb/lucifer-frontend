@@ -49,7 +49,7 @@
     </el-form>
 </template>
 <script>
-    import {postHost, getIdcList} from 'api/asset';
+    import {postHost, getHostGroupList} from 'api/asset';
 
     export default {
         components: {},
@@ -138,7 +138,7 @@
                 this.$refs[formName].resetFields();
             },
             getGroups() {
-                getIdcList().then(response => {
+                getHostGroupList().then(response => {
                     this.groups = response.data.results;
                 })
             },

@@ -39,6 +39,7 @@
     .tabs-view-container {
         display: inline-block;
         vertical-align: top;
+        margin-left: 10px;
         .tabs-view {
             margin-left: 10px;
         }

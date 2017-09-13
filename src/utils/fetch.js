@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
+import store from '../store'
+import {getToken} from "./auth"
 
-axios.defaults.withCredentials = true;
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 // 创建axios实例
 const service = axios.create({
@@ -11,7 +14,12 @@ const service = axios.create({
 
 // request拦截器
 service.interceptors.request.use(config => {
-    config.headers['Content-Type'] = "application/json;charset=utf-8";
+  // Do something before request is sent
+  if (store.getters.token) {
+      const token = getToken();
+      config.headers.Authorization = 'token ' + token; // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
+      config.headers['X-CSRFToken'] = token; //加上这个，解决build后 post出现403错误
+  }
   return config;
 }, error => {
   // Do something with request error

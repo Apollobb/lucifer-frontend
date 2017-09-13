@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
     };
 } else {
     CONFIG = {
-        apiUrl: "http://172.16.33.140",
+        apiUrl: "http://localhost:8000",
     };
 }
 
@@ -23,76 +23,31 @@ module.exports = {
     //数据分页限制
     LIMIT: 10,
 
+    //qiniu 上传到七牛
+    qn_ack: 'Q0IABHxpUZfWiUxzWdT6cMXQKusAmTsfX_fiCWC2',
+    qn_sek: 'qQ6Rjq3Kz8k05xEI9GG1T74BHg-EThAfgwJbaw8S',
+
     //本地上传到服务器
     uploads: `${url}/api/upload/`,
 
     //登录
-    login: `${url}/login/`,
+    //login: `${url}/api-token-auth/`,
+    login: `${url}/api-token-auth/`,
     changePassword: `${url}/api/changepasswd/`,
 
-    //用户角色
-    users: `${url}/userpermission/staffs/`,
-    staffmodify: `${url}/userpermission/staffmodify/`,
-
-    groups: `${url}/userpermission/groups/`,
-    groupmodify: `${url}/userpermission/groupmodify/`,
-
-    roles: `${url}/userpermission/roles/`,
-    rolemodify: `${url}/userpermission/rolemodify/`,
-
-    staffroles: `${url}/userpermission/staffroles/`,
-    staffrolemodify: `${url}/userpermission/staffrolemodify/`,
-
-    //权限
-    rolepermissions: `${url}/userpermission/rolepermissions/`,
-    rolepermissionmodify: `${url}/userpermission/rolepermissionmodify/`,
-
-    staffpermissions: `${url}/userpermission/staffpermissions/`,
-    staffpermissionmodify: `${url}/userpermission/staffpermissionmodify/`,
-
-
     //主机
-    servers: `${url}/servermanage/servers/`,
-    servermodify: `${url}/servermanage/servermodify/`,
+    hosts: `${url}/api/hosts/`,
+    hostgroups: `${url}/api/hostgroups/`,
 
-    idcs: `${url}/servermanage/idcs/`,
-    idcmodify: `${url}/servermanage/idcmodify/`,
-
-    //项目服务
-    projects: `${url}/servermanage/projects/`,
-    projectmodify: `${url}/servermanage/projectmodify/`,
-
-    services: `${url}/servermanage/services/`,
-    servicemodify: `${url}/servermanage/servicemodify/`,
-
-    //工具
-    //巡检
-    serverinspections: `${url}/inspectionmanage/serverinspections/`,
-    //支付回调dns
-    payhosts: `${url}/thirdmanage/payhosts/`,
-    payhostmodify: `${url}/thirdmanage/payhostmodify/`,
-
-    paydnses: `${url}/thirdmanage/paydnses/`,
-    paydnsmodify: `${url}/thirdmanage/paydnsmodify/`,
+    //用户
+    users: `${url}/api/users/`,
+    groups: `${url}/api/groups/`,
+    roles: `${url}/api/roles/`,
 
     //值班
-    dutysheets: `${url}/dailymanage/dutysheets/`,
-    dutysheetmodify: `${url}/dailymanage/dutysheetmodify/`,
+    dutys: `${url}/api/dutys/`,
 
-    //操作日志
-    operaterecords: `${url}/operaterecord/operaterecords/`,
-
-    //日志分析
-    //用户设备查询
-    agents: `${url}/loganalysis/agents/`,
-    //用户地区查询
-    areas: `${url}/loganalysis/areas/`,
-    //用户访问cdn节点查询
-    cdns: `${url}/loganalysis/cdns/`,
-    //用户访问域名查询
-    domainnames: `${url}/loganalysis/domainnames/`,
-    //用户访问状态查询
-    statuses: `${url}/loganalysis/statuses/`,
-    //Nginx后台转发查询
-    upstreams: `${url}/loganalysis/upstreams/`,
+    //发布项目
+    jobs: `${url}/api/jobs/`,
+    jobgroups: `${url}/api/jobgroups/`,
 };

@@ -2,17 +2,16 @@
     <div>
         <el-menu class="navbar" mode="horizontal">
             <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+
             <tabs-view></tabs-view>
             <screenfull class='screenfull'></screenfull>
             <el-dropdown class="avatar-container" trigger="hover">
                 <div class="avatar-wrapper">
-                    <el-button class="username" type="success">
-                        {{username}}
-                        <i class="el-icon-caret-bottom el-icon--right"></i>
-                    </el-button>
+                    <img class="user-avatar" :src="'upload' + UserInfo.avatar+'?imageView2/1/w/80/h/80'">
+                    <i class="el-icon-caret-bottom"></i>
                 </div>
                 <el-dropdown-menu class="user-dropdown" slot="dropdown">
-                    <el-dropdown-item @click.native="changeava=true" :disabled="true">
+                    <el-dropdown-item @click.native="changeava=true">
                         修改头像
                     </el-dropdown-item>
                     <el-dropdown-item @click.native="changepw=true">
@@ -38,6 +37,10 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
+
+        <el-dialog title="修改头像" :visible.sync="changeava" size="tiny">
+            <avatar-upload :userinfo="UserInfo"></avatar-upload>
+        </el-dialog>
     </div>
 </template>
 
@@ -47,6 +50,7 @@
     import TabsView from './TabsView';
     import Hamburger from 'components/Hamburger';
     import Screenfull from 'components/Screenfull';
+    import avatarUpload from '../components/avatarUpload';
     import {changePassword} from 'api/auth'
 
     export default {
@@ -55,6 +59,7 @@
             TabsView,
             Hamburger,
             Screenfull,
+            avatarUpload,
         },
         data() {
             const validatePass = (rule, value, callback) => {
@@ -80,7 +85,7 @@
                 }
             };
             return {
-                username: localStorage.getItem('username'),
+                UserInfo: '',
                 ruleForm: {
                     new_password1: '',
                     new_password2: ''
@@ -102,16 +107,22 @@
         computed: {
             ...mapGetters([
                 'sidebar',
+                'userinfo',
             ]),
+        },
+        created() {
+            this.getUserinfo();
         },
 
         methods: {
+            getUserinfo() {
+                this.UserInfo = JSON.parse(this.userinfo)
+            },
             toggleSideBar() {
                 this.$store.dispatch('ToggleSideBar')
             },
             logout() {
                 this.$store.dispatch('LogOut').then(() => {
-                    this.$router.push('/login');
                     location.reload();// 为了重新实例化vue-router对象 避免bug
                 });
             },
@@ -160,9 +171,9 @@
         }
         .screenfull {
             position: absolute;
-            right: 120px;
+            right: 90px;
             top: 16px;
-            color: #e7fff8;
+            color: red;
         }
         .avatar-container {
             height: 50px;
@@ -173,14 +184,16 @@
                 cursor: pointer;
                 margin-top: 5px;
                 position: relative;
-                right: -20px;
                 .user-avatar {
                     width: 40px;
                     height: 40px;
                     border-radius: 10px;
                 }
-                .username {
-                    border-radius: 10px;
+                .el-icon-caret-bottom {
+                    position: absolute;
+                    right: -20px;
+                    top: 25px;
+                    font-size: 12px;
                 }
             }
         }

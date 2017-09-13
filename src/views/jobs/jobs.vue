@@ -17,57 +17,45 @@
             </div>
             <div>
                 <el-table :data="tableData" border style="width: 100%">
-                    <el-table-column prop='hostname' label='主机名' sortable>
+                    <el-table-column prop='name' label='项目名' sortable>
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <el-button type="text" @click="handleEdit(scope.row)">{{ scope.row.hostname }}
-                                </el-button>
+                                <el-button type="text" @click="handleEdit(scope.row)">{{ scope.row.name }}</el-button>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='ip' label='主机ip' sortable>
+                    <el-table-column prop='hosts' label='被发布的主机'>
                         <template scope="scope">
                             <el-popover trigger="hover" placement="top">
-                                <p>其他ip: {{ scope.row.other_ip }}</p>
+                                <p v-for="item in scope.row.hosts" :key="item.id">{{ item }}</p>
                                 <div slot="reference" class="name-wrapper" style="text-align: center">
-                                    <el-tag>{{ scope.row.ip }}</el-tag>
+                                    <el-tag color="green">{{ scope.row.hosts[0] }}</el-tag>
                                 </div>
                             </el-popover>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='group' label='所在组' sortable>
-                        <template scope="scope">
-                            <div v-for="item in scope.row.group" :key="item.id" slot="reference" class="name-wrapper"
-                                 style="text-align: center">
-                                <el-tag type="warning">{{item}}</el-tag>
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop='asset_type' label='类型' sortable>
+                    <el-table-column prop='group' label='所在组' sortable></el-table-column>
+                    <el-table-column prop='deploy_status' label='发布状态' sortable='custom'
+                                     :filters="[{ text: '未执行', value: 'unexecuted' }, { text: '发布中', value: 'deploy' }, { text: '发布成功', value: 'succed' }, { text: '发布失败', value: 'failed' }]"
+                                     :filter-method="filterTag"
+                                     filter-placement="bottom-end">
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <el-tag :color="ASSET_TYPE[scope.row.asset_type].color">
-                                    {{ASSET_TYPE[scope.row.asset_type].type}}
+                                <el-tag :type="DEPLOY_STATUS[scope.row.deploy_status].type">
+                                    {{DEPLOY_STATUS[scope.row.deploy_status].status}}
 
                                 </el-tag>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='status' label='状态' sortable>
+                    <el-table-column prop='update_time' label='发布时间' sortable></el-table-column>
+                    <el-table-column prop='cost_time' label='发布所用时间' sortable></el-table-column>
+                    <el-table-column label="操作">
                         <template scope="scope">
-                            <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <el-tag :type="ASSET_STATUS[scope.row.status].type">
-                                    {{ASSET_STATUS[scope.row.status].status}}
-                                </el-tag>
-                            </div>
+                            <el-button @click="handleRun(scope.row)" type="success" size="small">执行</el-button>
+                            <el-button type="info" size="small" disabled>查看</el-button>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='os' label='系统'></el-table-column>
-                    <el-table-column prop='cpu_model' label='cpu型号'></el-table-column>
-                    <el-table-column prop='cpu_num' label='cpu个数' sortable></el-table-column>
-                    <el-table-column prop='memory' label='内存(M)' sortable></el-table-column>
-                    <el-table-column prop='disk' label='磁盘(G)' sortable></el-table-column>
-                    <el-table-column prop='memo' label='备注'></el-table-column>
                 </el-table>
             </div>
             <div class="table-pagination">
@@ -83,24 +71,28 @@
                 </el-pagination>
             </div>
         </el-card>
-
         <el-dialog :title="textMap[dialogStatus]" :visible.sync="addForm" size="small">
-            <add-host @DialogStatus="getDialogStatus"></add-host>
+            <add-project @DialogStatus="getDialogStatus"></add-project>
         </el-dialog>
         <el-dialog :title="textMap[dialogStatus]" :visible.sync="editForm" size="small">
-            <edit-host :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-host>
+            <edit-project :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-project>
+        </el-dialog>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="runForm" size="tiny">
+            <run-project :hosts="rowdata.hosts" :deploy_env="deploy_env" :code_branch="code_branch" @DialogStatus="getDialogStatus"></run-project>
         </el-dialog>
     </div>
 </template>
 
 <script>
-    import {getHostList} from 'api/asset';
+    import {getJobList} from 'api/job'
     import {LIMIT} from '@/config'
-    import addHost from './addhost.vue'
-    import editHost from './edithost.vue'
+    import addProject from './addjob.vue'
+    import editProject from './editjob.vue'
+    import runProject from './runjob.vue'
+    import {getHostList} from 'api/asset'
 
     export default {
-        components: {addHost, editHost},
+        components: {addProject, editProject, runProject},
         data() {
             return {
                 tableData: [],
@@ -110,21 +102,15 @@
                 limit: LIMIT,
                 offset: '',
                 pagesize: [10, 25, 50, 100],
-                ASSET_TYPE: {
-                    'physical': {"type": "物理机", "color": "#37474F"},
-                    'virtual': {"type": "虚拟机", "color": "#7986cb"},
-                    'container': {"type": "容器", "color": "#f06292"},
-                    'network': {"type": "网络设备", "color": "#4dd0e1"},
-                    'other': {"type": "其他设备", "color": "#d4e157"},
-                },
-                ASSET_STATUS: {
-                    'used': {"status": "使用中", "type": "primary"},
-                    'noused': {"status": "未使用", "type": "gray"},
-                    'broken': {"status": "故障", "type": "danger"},
-                    'other': {"status": "其他", "type": "warning"}
+                DEPLOY_STATUS: {
+                    'unexecuted': {"status": "未执行", "type": "gray"},
+                    'deploy': {"status": "发布中", "type": "primary"},
+                    'succed': {"status": "发布成功", "type": "success"},
+                    'failed': {"status": "发布失败", "type": "danger"}
                 },
                 addForm: false,
                 editForm: false,
+                runForm: false,
                 rowdata: {},
                 dialogStatus: '',
                 textMap: {
@@ -132,13 +118,14 @@
                     edit: '编辑',
                     run: '构建'
                 },
+                deploy_env: ['test','stagging','pre','prod'],
+                code_branch: ['master','dev','test'],
             }
         },
 
         created() {
             this.fetchData();
         },
-
         methods: {
             fetchData() {
                 const parms = {
@@ -146,7 +133,7 @@
                     offset: this.offset,
                     name__contains: this.searchdata
                 };
-                getHostList(parms).then(response => {
+                getJobList(parms).then(response => {
                     this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
@@ -155,6 +142,7 @@
             getDialogStatus(data) {
                 this.editForm = data;
                 this.addForm = data;
+                this.runForm = data;
                 this.fetchData();
             },
 
@@ -163,9 +151,31 @@
                 this.dialogStatus = 'create';
                 this.addForm = true;
             },
+
             handleEdit(row) {
+                this.rowdata = Object.assign({}, row);
+                this.dialogStatus = 'edit';
                 this.editForm = true;
-                this.rowdata = row
+            },
+
+            handleRun(row) {
+                this.rowdata = Object.assign({}, row);
+                this.dialogStatus = 'run';
+                this.runForm = true;
+            },
+            reseRowdata() {
+                this.rowdata = {
+                    name: '',
+                    deploy_env: '',
+                    jobs_type: '',
+                    hosts: [],
+                    group: '',
+                    code_repo: '',
+                    code_url: '',
+                    code_branch: '',
+                    deploy_script: '',
+                    desc: ''
+                }
             },
             searchClick() {
                 this.fetchData();
@@ -178,22 +188,9 @@
                 this.offset = val - 1;
                 this.fetchData();
             },
-            reseRowdata() {
-                this.rowdata = {
-                    hostname: '',
-                    ip: '',
-                    other_ip: '',
-                    group: '',
-                    asset_type: '',
-                    status: '',
-                    os: '',
-                    cpu_model: '',
-                    cpu_num: '',
-                    memory: '',
-                    disk: '',
-                    memo: ''
-                }
-            }
+            filterTag(value, row) {
+                return row.deploy_status === value;
+            },
         },
     }
 </script>

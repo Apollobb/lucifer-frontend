@@ -19,6 +19,10 @@ import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 Vue.component('icon', Icon);
 
+/* table */
+import DataTables from 'vue-data-tables'
+Vue.use(DataTables);
+
 /* markdown */
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'

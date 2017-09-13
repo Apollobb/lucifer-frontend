@@ -1,5 +1,6 @@
 <template>
-    <div class="body-main">
+    <div>
+        <el-card>
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="addGroup=true">新建项目组</el-button>
@@ -17,7 +18,7 @@
             <div>
                 <el-table :data='tableData' border style="width: 100%">
                     <el-table-column prop='name' label='组名' sortable='custom'></el-table-column>
-                    <el-table-column prop='comment' label='描述' sortable='custom'></el-table-column>
+                    <el-table-column prop='desc' label='描述' sortable='custom'></el-table-column>
                     <el-table-column label="操作">
                         <template scope="scope">
                             <el-button @click="showGroup(scope.row.name)" type="success" size="small">查看</el-button>
@@ -28,6 +29,7 @@
             </div>
             <div class="table-pagination">
                 <el-pagination
+                        small
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
                         :current-page.sync="currentPage"
@@ -37,7 +39,8 @@
                         :total="tabletotal">
                 </el-pagination>
             </div>
-        <el-dialog :visible.sync="addGroup" size="tiny">
+        </el-card>
+        <el-dialog title="新建项目组" :visible.sync="addGroup" size="tiny">
             <add-group @formdata="addGroupSubmit"></add-group>
         </el-dialog>
         <el-dialog :visible.sync="viewGroup" size="tiny">
@@ -79,12 +82,12 @@
              */
             fetchData() {
                 const parms = {
-//                    limit: this.limit,
-//                    offset: this.offset,
-//                    name__contains: this.searchdata
+                    limit: this.limit,
+                    offset: this.offset,
+                    name__contains: this.searchdata
                 };
                 getGroupList(parms).then(response => {
-                    this.tableData = response.data;
+                    this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
             },
@@ -143,6 +146,11 @@
     }
 
     .table-search {
+        float: right;
+    }
+
+    .table-pagination {
+        padding: 10px 0;
         float: right;
     }
 </style>

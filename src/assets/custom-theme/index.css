@@ -23,11 +23,11 @@ html {
     font-size: 16px;
 }
 
-/* 表格透明 */
-.el-table {
-    background-color: transparent;  /*透明*/
-    border-radius: 5px;   /* 边框圆角 */
-}
+/*!* 表格透明 *!*/
+/*.el-table {*/
+    /*background-color: transparent;  !*透明*!*/
+    /*border-radius: 5px;   !* 边框圆角 *!*/
+/*}*/
 
 /* 表格整体透明 */
  /*.el-table th,.el-table th>.cell {*/

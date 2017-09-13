@@ -1,56 +1,55 @@
 <template>
     <div>
-        <div class="item-title">{{title}}</div>
+        <div class="item-title">选择主机</div>
         <div class="host-select">
             <el-transfer
+                    v-model="value"
                     filterable
                     :titles="['未选择', '已选择']"
                     :button-texts="['滚回来', '滚过去']"
                     :footer-format="{noChecked: '${total}',hasChecked: '${checked}/${total}'}"
                     @change="handleChange"
-                    v-model="value"
-                    :data="alldata">
-                <el-button type="info" class="transfer-footer" slot="left-footer" size="small" @click="transferData">重置数据</el-button>
+                    :data="allhost">
+                <el-button type="info" class="transfer-footer" slot="left-footer" size="small" @click="hostData">重置数据</el-button>
             </el-transfer>
         </div>
     </div>
 </template>
 
 <script>
-    import {getUserList} from 'api/user';
+    import {getHostList} from 'api/asset';
     export default {
-        props: ['selectdata', 'title'],
+        props: ['selecthost'],
         data() {
             return {
-                alldata: [],
-                value: [],
+                allhost: [],
+                value: this.selecthost,
                 changedata: false
             };
         },
 
         created() {
-            this.transferData();
+            this.hostData();
         },
 
         methods: {
-            transferData() {
-                this.alldata = [];
-                this.value = [];
+            hostData() {
+                this.allhost = [];
+                this.value = this.selecthost;
                 const parms = {
-//                    status: "used"
+                    status: "used"
                 };
-                getUserList(parms).then(response => {
-                    const results = response.data;
+                getHostList(parms).then(response => {
+                    const results = response.data.results;
                     for (var i = 0, len = results.length; i < len; i++) {
-                        this.alldata.push({
-                            key: results[i].id,
-                            label: results[i].name
+                        this.allhost.push({
+                            key: results[i].hostname,
                         });
                     }
                 });
             },
             handleChange(value, direction, movedKeys) {
-                this.$emit('getSelectData', value);
+                this.$emit('gethosts', value);
             }
         }
     };
@@ -58,12 +57,12 @@
 
 <style>
     .item-title {
-        font-weight: 100;
+        font-weight: 600;
         text-align: right;
         vertical-align: middle;
         float: left;
         font-size: 14px;
-        color: #58ff28;
+        color: #48576a;
         line-height: 1;
         padding: 11px 9px;
         margin-left: 25px;

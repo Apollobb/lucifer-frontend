@@ -18,7 +18,7 @@
         },
         fill: {
           type: String,
-          default: '#ff363a'
+          default: '#48576a'
         }
       },
       data() {
@@ -46,6 +46,5 @@
         display: inline-block;
         cursor: pointer;
         vertical-align: -0.15em;
-        color: #ff363a;
     }
 </style>

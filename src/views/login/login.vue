@@ -1,29 +1,31 @@
 <template>
-    	<div id="menu">
-		<canvas id="canvas" class="canvas"></canvas>
-    <div class="login-container">
-        <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left"
-                 label-width="0px"
-                 class="card-box login-form">
-            <h3 class="title">Metero运维系统</h3>
-            <el-form-item prop="name">
-                <span class="svg-container"><icon name="user-o" class="user-icon"></icon></span>
-                <el-input name="name" type="text" v-model="loginForm.name" autoComplete="on"
-                          placeholder="用户名"></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-                <span class="svg-container"><icon name="key"></icon></span>
-                <el-input name="password" type="password" @keyup.enter.native="handleLogin" v-model="loginForm.password"
-                          autoComplete="on" placeholder="密码"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-                    登录
-                </el-button>
-            </el-form-item>
-        </el-form>
-    </div>
+    <div id="menu">
+        <canvas id="canvas" class="canvas"></canvas>
+        <div class="login-container">
+            <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left"
+                     label-width="0px"
+                     class="card-box login-form">
+                <h3 class="title">Lucifer运维系统</h3>
+                <el-form-item prop="username">
+                    <span class="svg-container"><icon name="user"></icon></span>
+                    <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on"
+                              placeholder="用户名"></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                    <span class="svg-container"><icon name="key"></icon></span>
+                    <el-input name="password" type="password" @keyup.enter.native="handleLogin"
+                              v-model="loginForm.password"
+                              autoComplete="on" placeholder="密码"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" style="width:100%;" :loading="loading"
+                               @click.native.prevent="handleLogin">
+                        登录
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </div>
+    </div>
 </template>
 
 <script>
@@ -39,69 +41,69 @@
         data() {
             return {
                 loginForm: {
-                    name: '',
+                    username: '',
                     password: ''
                 },
                 loginRules: {
-                    name: [
-                         { required: true, message: '请输入用户名', trigger: 'blur' },
-                         { min: 3, message: '用户名长度不能小于3位', trigger: 'blur' }
+                    username: [
+                        {required: true, message: '请输入用户名', trigger: 'blur'},
+                        {min: 3, message: '用户名长度不能小于3位', trigger: 'blur'}
                     ],
                     password: [
                         {required: true, message: '请输入密码', trigger: 'blur'},
-                        { min: 6, message: '密码长度不能小于6位', trigger: 'blur' }
+                        {min: 6, message: '密码长度不能小于6位', trigger: 'blur'}
                     ]
                 },
                 loading: false,
                 showDialog: false
             }
         },
-	mounted() {
-		let canvas = document.getElementById('canvas'),
-		    ctx = canvas.getContext('2d'),
-		    width = window.innerWidth,
-		    height = window.innerHeight,
-		    //实例化月亮和星星。流星是随机时间生成，所以只初始化数组
-		    moon = new Moon(ctx, width, height),
-		    stars = new Stars(ctx, width, height, 200),
-		    meteors = [],
-		    count = 0
 
-		    canvas.width = width;
-		    canvas.height = height;
+        mounted() {
+            let canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d'),
+                width = window.innerWidth,
+                height = window.innerHeight,
+                //实例化月亮和星星。流星是随机时间生成，所以只初始化数组
+                moon = new Moon(ctx, width, height),
+                stars = new Stars(ctx, width, height, 200),
+                meteors = [],
+                count = 0
 
-		const meteorGenerator = ()=> {
-		    //x位置偏移，以免经过月亮
-		    let x = Math.random() * width + 800
-		    meteors.push(new Meteor(ctx, x, height))
+            canvas.width = width;
+            canvas.height = height;
 
-		    //每隔随机时间，生成新流星
-		    setTimeout(()=> {
-		        meteorGenerator()
+            const meteorGenerator = () => {
+                //x位置偏移，以免经过月亮
+                let x = Math.random() * width + 800
+                meteors.push(new Meteor(ctx, x, height))
 
-		    }, Math.random() * 2000)
-		}
+                //每隔随机时间，生成新流星
+                setTimeout(() => {
+                    meteorGenerator()
 
-		const frame = ()=>{
-		    count++
-		    count % 10 == 0 && stars.blink()
-		    moon.draw()
-		    stars.draw()
+                }, Math.random() * 2000)
+            }
 
-		    meteors.forEach((meteor, index, arr)=> {
-		        //如果流星离开视野之内，销毁流星实例，回收内存
-		        if (meteor.flow()) {
-		            meteor.draw()
-		        } else {
-		            arr.splice(index, 1)
-		        }
-		    })
-		    requestAnimationFrame(frame)
-		}
-		meteorGenerator()
-		frame()
-	},
+            const frame = () => {
+                count++
+                count % 10 == 0 && stars.blink()
+                moon.draw()
+                stars.draw()
 
+                meteors.forEach((meteor, index, arr) => {
+                    //如果流星离开视野之内，销毁流星实例，回收内存
+                    if (meteor.flow()) {
+                        meteor.draw()
+                    } else {
+                        arr.splice(index, 1)
+                    }
+                })
+                requestAnimationFrame(frame)
+            }
+            meteorGenerator()
+            frame()
+        },
         methods: {
             ...mapActions(['Login']),
             handleLogin() {
@@ -133,9 +135,10 @@
     }
 
     .canvas {
-    position: fixed;
-    z-index: -1;
-}
+        position: fixed;
+        z-index: -1;
+    }
+
     .login-container {
         @include relative;
         height: 100vh;

@@ -1,5 +1,6 @@
 <template>
-    <div class="body-main">
+    <div>
+        <el-card>
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="addForm=true">新建用户</el-button>
@@ -15,34 +16,27 @@
                 </div>
             </div>
             <div>
-                <el-table
-                        :data="tableData"
-                        border
-                        @selection-change="handleSelectionChange"
-                        header-align="center"
-                        alignn="center"
-                >
+                <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
                     <el-table-column type="selection"></el-table-column>
-                    <el-table-column prop='name' label='用户名' sortable>
+                    <el-table-column prop='username' label='用户名' sortable>
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <el-button type="text" @click="handleEdit(scope.row)">{{ scope.row.name }}
+                                <el-button type="text" @click="handleEdit(scope.row)">{{ scope.row.username }}
                                 </el-button>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='sex' label='性别'></el-table-column>
-                    <el-table-column prop='position' label='职位'></el-table-column>
-                    <el-table-column prop='group' label='所在组' sortable>
+                    <el-table-column prop='name' label='姓名' sortable></el-table-column>
+                    <el-table-column prop='email' label='邮箱'></el-table-column>
+                    <el-table-column prop='group' label='所在组' sortable></el-table-column>
+                    <el-table-column prop='roles' label='角色' sortable></el-table-column>
+                    <el-table-column prop='avatar' label='头像'>
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
-                                {{ scope.row.group.comment }}
+                                <img :src="'upload' + scope.row.avatar" height="50"/>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='roles' label='角色' sortable></el-table-column>
-                    <el-table-column prop='telno' label='电话'></el-table-column>
-                    <el-table-column prop='comment' label='备注'></el-table-column>
                 </el-table>
             </div>
             <div class="table-footer">
@@ -51,6 +45,7 @@
                 </div>
                 <div class="table-pagination">
                     <el-pagination
+                            small
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
                             :current-page.sync="currentPage"
@@ -61,10 +56,11 @@
                     </el-pagination>
                 </div>
             </div>
-        <el-dialog :visible.sync="addForm" size="small">
+        </el-card>
+        <el-dialog title="新建用户" :visible.sync="addForm" size="small">
             <add-user @DialogStatus="getDialogStatus"></add-user>
         </el-dialog>
-        <el-dialog :visible.sync="editForm" size="small">
+        <el-dialog title="编辑用户" :visible.sync="editForm" size="small">
             <edit-user :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-user>
         </el-dialog>
     </div>
@@ -102,13 +98,13 @@
         methods: {
             fetchData() {
                 const parms = {
-//                    id__gt: 1,   //排除admin用户
-//                    limit: this.limit,
-//                    offset: this.offset,
-//                    username__contains: this.searchdata
+                    id__gt: 1,   //排除admin用户
+                    limit: this.limit,
+                    offset: this.offset,
+                    username__contains: this.searchdata
                 };
                 getUserList(parms).then(response => {
-                    this.tableData = response.data;
+                    this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
             },
@@ -163,11 +159,12 @@
             },
             reseRowdata() {
                 this.rowdata = {
+                    username: '',
+                    email: '',
                     name: '',
-                    sex: '',
-                    position: '',
+                    is_active: '',
                     group: '',
-                    telno: '',
+                    roles: '',
                     password: '',
                 }
             },
@@ -188,5 +185,10 @@
     .table-search {
         float: right;
         padding: 10px 0;
+    }
+
+    .table-pagination {
+        padding: 10px 0;
+        float: right;
     }
 </style>

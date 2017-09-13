@@ -42,7 +42,7 @@
         this.chart.setOption({
           title: {
             text: 'WEEKLY WRITE ARTICLES',
-            x: 'center',
+            x: 'center'
           },
           tooltip: {
             trigger: 'item',
@@ -51,8 +51,7 @@
           legend: {
             x: 'center',
             y: 'bottom',
-            data: [{value: 'industries', textStyle: {color: 'red'}},
-                'technology', 'gold', 'forex', 'forecasts', 'markets']
+            data: ['industries', 'technology', 'gold', 'forex', 'forecasts', 'markets']
           },
           calculable: true,
           series: [

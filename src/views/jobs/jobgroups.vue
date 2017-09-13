@@ -1,8 +1,9 @@
 <template>
-    <div class="body-main">
+    <div>
+        <el-card>
             <div class="head-lavel">
                 <div class="table-button">
-                    <el-button type="info" icon="plus" @click="">分配角色权限</el-button>
+                    <el-button type="info" icon="plus" @click="addGroup=true">新建项目组</el-button>
                 </div>
                 <div class="table-search">
                     <el-input
@@ -16,25 +17,19 @@
             </div>
             <div>
                 <el-table :data='tableData' border style="width: 100%">
-                    <el-table-column prop='role' label='角色' sortable='custom'>
-                        <template scope="scope">
-                            <div slot="reference" class="name-wrapper" style="text-align: center">
-                                {{ scope.row.role.name }}
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop='permission' label='权限' sortable='custom'></el-table-column>
-                    <el-table-column prop='comment' label='描述' sortable='custom'></el-table-column>
+                    <el-table-column prop='name' label='组名' sortable></el-table-column>
+                    <el-table-column prop='desc' label='描述'></el-table-column>
                     <el-table-column label="操作">
                         <template scope="scope">
                             <el-button @click="showGroup(scope.row.name)" type="success" size="small">查看</el-button>
-                            <el-button @click="putGroup(scope.row.id)" type="info" size="small" disabled>修改</el-button>
+                            <el-button @click="deleteGroup(scope.row.id)" type="danger" size="small">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </div>
             <div class="table-pagination">
                 <el-pagination
+                        small
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
                         :current-page.sync="currentPage"
@@ -44,19 +39,24 @@
                         :total="tabletotal">
                 </el-pagination>
             </div>
-        <el-dialog :visible.sync="addGroup" size="tiny">
+        </el-card>
+        <el-dialog title="新建项目组" :visible.sync="addGroup" size="tiny">
             <add-group @formdata="addGroupSubmit"></add-group>
+        </el-dialog>
+        <el-dialog :visible.sync="viewGroup" size="tiny">
+            <view-group :groupName="groupName"></view-group>
         </el-dialog>
     </div>
 </template>
 
 <script>
-    import {getRolePermissions, postRolePermissions, putRolePermissions, deleteRolePermissions} from 'api/permission';
+    import {getJobGroupList, postJobGroup, deleteJobGroup} from 'api/job';
     import {LIMIT} from '@/config'
     import addGroup from '../components/addgroup.vue'
+    import viewGroup from './viewgroup.vue'
 
     export default {
-        components: {addGroup},
+        components: {addGroup, viewGroup},
         data() {
             return {
                 tableData: [],
@@ -68,7 +68,7 @@
                 pagesize: [10, 25, 50, 100],
                 addGroup: false,
                 viewGroup: false,
-                groupName: ''
+                groupName: '',
             }
         },
 
@@ -82,18 +82,18 @@
              */
             fetchData() {
                 const parms = {
-//                    limit: this.limit,
-//                    offset: this.offset,
-//                    name__contains: this.searchdata
+                    limit: this.limit,
+                    offset: this.offset,
+                    name__contains: this.searchdata
                 };
-                getRolePermissions(parms).then(response => {
-                    this.tableData = response.data;
+                getJobGroupList(parms).then(response => {
+                    this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
             },
 
             addGroupSubmit(formdata) {
-                postRolePermissions(formdata).then(response => {
+                postJobGroup(formdata).then(response => {
                     this.$message({
                         message: '恭喜你，添加成功',
                         type: 'success'
@@ -106,7 +106,7 @@
                 });
             },
             deleteGroup(id){
-                deleteRolePermissions(id).then(response => {
+                deleteJobGroup(id).then(response => {
                     this.$message({
                         message: '恭喜你，删除成功',
                         type: 'success'
@@ -146,6 +146,11 @@
     }
 
     .table-search {
+        float: right;
+    }
+
+    .table-pagination {
+        padding: 10px 0;
         float: right;
     }
 </style>

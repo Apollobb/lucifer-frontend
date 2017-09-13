@@ -1,8 +1,9 @@
 <template>
-    <div class="body-main">
+    <div>
+        <el-card>
             <div class="head-lavel">
                 <div class="table-button">
-                    <el-button type="info" icon="plus" @click="addForm=true">新建角色对象</el-button>
+                    <el-button type="info" icon="plus" @click="addGroup=true">新建角色对象</el-button>
                 </div>
                 <div class="table-search">
                     <el-input
@@ -16,24 +17,19 @@
             </div>
             <div>
                 <el-table :data='tableData' border style="width: 100%">
-                    <el-table-column prop='name' label='角色' sortable>
-                        <template scope="scope">
-                            <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <el-button type="text" @click="handleEdit(scope.row)">{{ scope.row.name }}
-                                </el-button>
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop='comment' label='描述'></el-table-column>
+                    <el-table-column prop='name' label='角色' sortable></el-table-column>
+                    <el-table-column prop='cnname' label='中文名'></el-table-column>
+                    <el-table-column prop='desc' label='描述'></el-table-column>
                     <el-table-column label="操作">
                         <template scope="scope">
-                            <el-button @click="showGroup(scope.row.name)" type="success" size="small">查看</el-button>
+                            <el-button @click="deleteGroup(scope.row.id)" type="danger" size="small">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </div>
             <div class="table-pagination">
                 <el-pagination
+                        small
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
                         :current-page.sync="currentPage"
@@ -43,14 +39,17 @@
                         :total="tabletotal">
                 </el-pagination>
             </div>
-
-        <el-dialog :visible.sync="addForm" size="tiny">
+        </el-card>
+        <el-dialog title="新建角色对象" :visible.sync="addGroup" size="tiny">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="角色名" prop="name">
                     <el-input v-model="ruleForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="描述" prop="comment">
-                    <el-input v-model="ruleForm.comment"></el-input>
+                <el-form-item label="中文名" prop="cnname">
+                    <el-input v-model="ruleForm.cnname"></el-input>
+                </el-form-item>
+                <el-form-item label="描述" prop="desc">
+                    <el-input v-model="ruleForm.desc"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="addGroupSubmit('ruleForm')">立即创建</el-button>
@@ -58,25 +57,15 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
-
-        <el-dialog :visible.sync="viewForm" size="tiny">
-            <view-role :groupName="roleName"></view-role>
-        </el-dialog>
-
-        <el-dialog :visible.sync="editForm" size="small">
-            <edit-role :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-role>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-    import {getRoleList, postRole} from 'api/user';
+    import {getRoleList, postRole, deleteRole} from 'api/user';
     import {LIMIT} from '@/config'
-    import viewRole from './viewgroup.vue'
-    import editRole from './editrole.vue'
 
     export default {
-        components: {viewRole, editRole},
+        components: {},
         data() {
             return {
                 tableData: [],
@@ -86,23 +75,20 @@
                 limit: LIMIT,
                 offset: '',
                 pagesize: [10, 25, 50, 100],
-                addForm: false,
-                editForm: false,
-                rowdata: {},
+                addGroup: false,
                 ruleForm: {
                     name: '',
-                    comment: ''
+                    cnname: '',
+                    desc: ''
                 },
                 rules: {
                     name: [
                         {required: true, message: '请输入一个风骚的角色', trigger: 'blur'},
                     ],
-                    comment: [
-                        {required: true, message: '请输入一个风骚的备注', trigger: 'blur'},
+                    cnname: [
+                        {required: true, message: '请输入一个风骚的角色中文', trigger: 'blur'},
                     ]
-                },
-                viewForm: false,
-                roleName: ''
+                }
             }
         },
 
@@ -116,20 +102,16 @@
              */
             fetchData() {
                 const parms = {
-//                    limit: this.limit,
-//                    offset: this.offset,
-//                    name__contains: this.searchdata
+                    limit: this.limit,
+                    offset: this.offset,
+                    name__contains: this.searchdata
                 };
                 getRoleList(parms).then(response => {
-                    this.tableData = response.data;
+                    this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
             },
 
-            getDialogStatus(data) {
-                this.editForm = data;
-                this.fetchData();
-            },
             addGroupSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
@@ -150,13 +132,16 @@
                     }
                 });
             },
-            showGroup(roleName){
-                this.viewForm = true;
-                this.roleName = roleName
-            },
-            handleEdit(row){
-                this.editForm = true;
-                this.rowdata = row;
+            deleteGroup(id){
+                deleteRole(id).then(response => {
+                    this.$message({
+                        message: '恭喜你，删除成功',
+                        type: 'success'
+                    });
+                }).catch(error => {
+                    this.$message.error('删除失败');
+                    console.log(error);
+                });
             },
             searchClick() {
                 this.fetchData();
@@ -186,6 +171,11 @@
     }
 
     .table-search {
+        float: right;
+    }
+
+    .table-pagination {
+        padding: 10px 0;
         float: right;
     }
 </style>

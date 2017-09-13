@@ -1,28 +1,29 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
     <el-form :model="rowdata" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="name">
+        <el-form-item label="用户名" prop="username">
+            <el-input v-model="rowdata.username"></el-input>
+        </el-form-item>
+        <el-form-item label="Email" prop="email">
+            <el-input v-model="rowdata.email"></el-input>
+        </el-form-item>
+        <el-form-item label="中文名" prop="name">
             <el-input v-model="rowdata.name"></el-input>
-        </el-form-item>
-        <el-form-item label="性别" prop="sex">
-            <el-select v-model="rowdata.sex" placeholder="请选择性别">
-                <el-option v-for="item in sex" :key="item" :value="item"></el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="职位" prop="position">
-            <el-input v-model="rowdata.position"></el-input>
         </el-form-item>
         <el-form-item label="用户分组" prop="group">
             <el-select v-model="rowdata.group" placeholder="请选择用户分组">
-                <el-option v-for="item in groups" :key="item.name" :label="item.name" :value="item.id"></el-option>
+                <el-option v-for="item in groups" :key="item.name" :value="item.name"></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="联系电话" prop="telno">
-            <el-input v-model="rowdata.telno"></el-input>
+        <el-form-item label="是否激活" prop="is_active">
+            <el-switch on-text="oo" off-text="xx" v-model="rowdata.is_active"></el-switch>
+            <a v-if="changePass" style="color: #ff2ff7">有bug,需要点击这个开关显示密码</a>
         </el-form-item>
-        <el-form-item label="备注" prop="comment">
-            <el-input v-model="rowdata.comment"></el-input>
+        <el-form-item label="角色" prop="group">
+            <el-select v-model="rowdata.roles" placeholder="请选择用户角色">
+                <el-option v-for="item in roles" :key="item.name" :value="item.name"></el-option>
+            </el-select>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item v-if="changePass" label="密码" prop="password">
             <el-input v-model="rowdata.password" :disabled="true">
                 <template slot="append">
                     <el-button type="info" size="small" @click="setPasswd()">生成密码</el-button>
@@ -36,7 +37,7 @@
     </el-form>
 </template>
 <script>
-    import {putUser, getGroupList, getRoleList} from 'api/user';
+    import {patchUser, getGroupList, getRoleList} from 'api/user';
 
     export default {
         components: {},
@@ -46,35 +47,36 @@
             return {
                 changePass: false,
                 rules: {
-                    name: [
+                    username: [
                         {required: true, message: '请输入用户名', trigger: 'blur'},
                     ],
-                    sex: [
-                        {required: true, message: '请输入性别', trigger: 'change'}
+                    email: [
+                        {required: true, type: 'email', message: '请输入正确的Email地址', trigger: 'blur'}
                     ],
-                    position: [
+                    name: [
                         {required: true, message: '请输入中文名', trigger: 'blur'}
                     ],
                     group: [
-                        {required: true, type: 'number', message: '请选择项目分组', trigger: 'change'},
+                        {required: true, message: '请选择项目分组', trigger: 'change'},
                     ],
-                    telno: [
-                        {required: true, message: '请输入联系电话', trigger: 'blur'},
-                    ]
+                    roles: [
+                        {required: true, message: '请选择角色', trigger: 'blur'},
+                    ],
                 },
                 groups: '',
-                sex: ['未知','男','女'],
+                roles: '',
             };
         },
 
         created() {
             this.getGroups();
+            this.getRoles();
         },
         methods: {
             postForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        putUser(this.rowdata.id, this.rowdata).then(response => {
+                        patchUser(this.rowdata.id, this.rowdata).then(response => {
                             if (response.statusText = 'ok') {
                                 this.$message({
                                     type: 'success',
@@ -92,16 +94,23 @@
                 });
                 this.$emit('DialogStatus', false);
             },
+
             getHosts(data) {
                 this.rowdata.hosts = data
             },
             getGroups() {
                 getGroupList().then(response => {
-                    this.groups = response.data;
+                    this.groups = response.data.results;
+                })
+            },
+            getRoles() {
+                getRoleList().then(response => {
+                    this.roles = response.data.results;
                 })
             },
             setPasswd() {
                 this.rowdata.password = Math.random().toString(35).slice(2);
+                console.log(this.rowdata.password)
             },
         }
     }

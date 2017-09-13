@@ -77,21 +77,3 @@ export function deleteUpload(id) {
         method: 'delete',
     });
 }
-
-// 查看操作记录
-export function getRecordList(query, id) {
-    if ( query.time_lte == 'NaN-aN-aN' || query.time_lte == '1970-01-01') {
-        delete query.time_gte;
-        delete query.time_lte;
-    }
-    if (id) {
-        var url = apiURL.operaterecords + id;
-    } else {
-        var url = apiURL.operaterecords;
-    }
-    return fetch({
-        url: url,
-        method: 'get',
-        params: query
-    });
-}

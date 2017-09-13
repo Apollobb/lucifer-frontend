@@ -1,5 +1,6 @@
 <template>
-    <div class="body-main">
+    <div>
+        <el-card>
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="addGroup=true">新建主机组</el-button>
@@ -17,7 +18,7 @@
             <div>
                 <el-table :data='tableData' border style="width: 100%">
                     <el-table-column prop='name' label='组名' sortable></el-table-column>
-                    <el-table-column prop='comment' label='描述'></el-table-column>
+                    <el-table-column prop='desc' label='描述'></el-table-column>
                     <el-table-column label="操作">
                         <template scope="scope">
                             <el-button @click="showGroup(scope.row.name)" type="success" size="small">查看</el-button>
@@ -28,6 +29,7 @@
             </div>
             <div class="table-pagination">
                 <el-pagination
+                        small
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
                         :current-page.sync="currentPage"
@@ -37,6 +39,7 @@
                         :total="tabletotal">
                 </el-pagination>
             </div>
+        </el-card>
         <el-dialog title="新建主机组" :visible.sync="addGroup" size="tiny">
             <add-group @formdata="addGroupSubmit"></add-group>
         </el-dialog>
@@ -47,7 +50,7 @@
 </template>
 
 <script>
-    import {getIdcList, postIdc, deleteIdc} from 'api/asset';
+    import {getHostGroupList, postHostGroup, deleteHostGroup} from 'api/asset';
     import {LIMIT} from '@/config'
     import addGroup from '../components/addgroup.vue'
     import viewGroup from './viewgroup.vue'
@@ -79,18 +82,18 @@
              */
             fetchData() {
                 const parms = {
-//                    limit: this.limit,
-//                    offset: this.offset,
-//                    name__contains: this.searchdata
+                    limit: this.limit,
+                    offset: this.offset,
+                    name__contains: this.searchdata
                 };
-                getIdcList(parms).then(response => {
-                    this.tableData = response.data;
+                getHostGroupList(parms).then(response => {
+                    this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
             },
 
             addGroupSubmit(formdata) {
-                postIdc(formdata).then(response => {
+                postHostGroup(formdata).then(response => {
                     this.$message({
                         message: '恭喜你，添加成功',
                         type: 'success'
@@ -103,7 +106,7 @@
                 });
             },
             deleteGroup(id){
-                deleteIdc(id).then(response => {
+                deleteHostGroup(id).then(response => {
                     this.$message({
                         message: '恭喜你，删除成功',
                         type: 'success'
@@ -146,6 +149,11 @@
     }
 
     .table-search {
+        float: right;
+    }
+
+    .table-pagination {
+        padding: 10px 0;
         float: right;
     }
 </style>

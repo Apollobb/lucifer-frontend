@@ -14,13 +14,25 @@
             </div>
             <div>
                 <el-table :data="tableData" border style="width: 100%">
-                    <el-table-column prop='username' label='用户名' sortable='custom'></el-table-column>
-                    <el-table-column prop='name' label='姓名' sortable='custom'></el-table-column>
-                    <el-table-column prop='roles' label='角色' sortable='custom'></el-table-column>
+                    <el-table-column prop='name' label='项目名'></el-table-column>
+                    <el-table-column prop='deploy_status' label='发布状态' sortable='custom'
+                                     :filters="[{ text: '未执行', value: 'unexecuted' }, { text: '发布中', value: 'deploy' }, { text: '发布成功', value: 'succed' }, { text: '发布失败', value: 'failed' }]"
+                                     :filter-method="filterTag"
+                                     filter-placement="bottom-end">
+                        <template scope="scope">
+                            <div slot="reference" class="name-wrapper" style="text-align: center">
+                                <el-tag :type="DEPLOY_STATUS[scope.row.deploy_status].type">
+                                    {{DEPLOY_STATUS[scope.row.deploy_status].status}}
+
+                                </el-tag>
+                            </div>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
             <div class="table-pagination">
                 <el-pagination
+                        small
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
                         :current-page.sync="currentPage"
@@ -35,11 +47,12 @@
 </template>
 
 <script>
-    import {getUserList} from 'api/user'
+    import {getJobList} from 'api/job'
     import {LIMIT} from '@/config'
 
     export default {
-        props: ['roleName'],
+
+        props: ['groupName'],
         data() {
             return {
                 tableData: [],
@@ -49,8 +62,12 @@
                 limit: LIMIT,
                 offset: '',
                 pagesize: [10, 25, 50, 100],
-                addForm: false,
-                editForm: false,
+                DEPLOY_STATUS: {
+                    'unexecuted': {"status": "未执行", "type": "gray"},
+                    'deploy': {"status": "发布中", "type": "primary"},
+                    'succed': {"status": "发布成功", "type": "success"},
+                    'failed': {"status": "发布失败", "type": "danger"}
+                },
                 rowdata: {}
             }
         },
@@ -58,17 +75,16 @@
         created() {
             this.fetchData();
         },
-
         methods: {
             fetchData() {
                 const parms = {
-//                    limit: this.limit,
-//                    offset: this.offset,
-//                    group__name: this.roleName,
-//                    username__contains: this.searchdata
+                    limit: this.limit,
+                    offset: this.offset,
+                    group__name: this.groupName,
+                    name__contains: this.searchdata
                 };
-                getUserList(parms).then(response => {
-                    this.tableData = response.data;
+                getJobList(parms).then(response => {
+                    this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
             },
@@ -83,7 +99,10 @@
                 this.offset = val - 1;
                 this.fetchData();
             },
-        }
+            filterTag(value, row) {
+                return row.deploy_status === value;
+            }
+        },
     }
 </script>
 

@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from './store'
+import * as CookiesApi from 'utils/auth'
+// in development env not use Lazy Loading,because Lazy Loading large page will cause webpack hot update too slow.so only in production use Lazy Loading
 
 /* layout */
 import Layout from '@/views/layout/Layout';
@@ -42,39 +44,15 @@ export const routes = [
         ]
     },
     {
-        path: '/permissions',
-        component: Layout,
-        redirect: '/permission/index',
-        name: '权限管理',
-        icon: 'user',
-        meta: {requiresAuth: true},
-        children: [
-            {path: 'staffperm', component: require('@/views/permissions/staffpermissions'), name: '用户权限'},
-            {path: 'roleperm', component: require('@/views/permissions/rolepermissions'), name: '角色权限'},
-        ]
-    },
-    {
         path: '/assets',
         component: Layout,
-        redirect: '/asset/index',
+        redirect: '/assets/index',
         name: '主机管理',
         icon: 'server',
         meta: {requiresAuth: true},
         children: [
             {path: 'hosts', component: require('@/views/assets/hosts'), name: '主机列表'},
-            {path: 'idcs', component: require('@/views/assets/idcs'), name: 'IDC列表'},
-        ]
-    },
-    {
-        path: '/projects',
-        component: Layout,
-        redirect: '/project/index',
-        name: '项目管理',
-        icon: 'server',
-        meta: {requiresAuth: true},
-        children: [
-            {path: 'hosts', component: require('@/views/assets/hosts'), name: '主机列表'},
-            {path: 'idcs', component: require('@/views/assets/idcs'), name: 'IDC列表'},
+            {path: 'hostgroups', component: require('@/views/assets/hostgroups'), name: '主机组列表'},
         ]
     },
     {
@@ -85,18 +63,43 @@ export const routes = [
         icon: 'leaf',
         meta: {requiresAuth: true},
         children: [
+            {path: 'runcmd', component: require('@/views/ansible/runcmd'), name: '执行命令'},
         ]
     },
+    // {
+    //     path: '/chat',
+    //     component: Layout,
+    //     redirect: '/chat/index',
+    //     name: '聊天管理',
+    //     icon: 'wechat',
+    //     meta: {requiresAuth: true},
+    //     children: [
+    //         {path: 'chat', component: require('@/views/chat/index'), name: '聊天'},
+    //     ]
+    // },
     {
         path: '/tools',
         component: Layout,
-        redirect: '/tool/index',
+        redirect: '/tools/index',
         name: '工具管理',
         icon: 'cogs',
         meta: {requiresAuth: true},
         children: [
             {path: 'duty', component: require('@/views/tools/duty'), name: '值班交接'},
-            {path: 'record', component: require('@/views/tools/record'), name: '操作记录'},
+            {path: 'upload', component: require('@/views/tools/upload'), name: '上传管理'},
+            {path: 'dragging', component: require('@/views/tools/dragging'), name: '拖拽编排'},
+        ]
+    },
+    {
+        path: '/jobs',
+        component: Layout,
+        redirect: '/jobs/index',
+        name: '发布管理',
+        icon: 'hourglass',
+        meta: {requiresAuth: true},
+        children: [
+            {path: 'jobs', component: require('@/views/jobs/jobs'), name: '项目列表'},
+            {path: 'jobgroups', component: require('@/views/jobs/jobgroups'), name: '项目组列表'},
         ]
     },
     {path: '*', redirect: '/404', hidden: true}
@@ -113,20 +116,51 @@ const router = new VueRouter({
 // 每个路由皆会的钩子函数
 // to 进入 from 离开 next 传递
 router.beforeEach((to, from, next) => {
-    //console.log('to=', to.fullPath, '| from=', from.fullPath);
+    // console.log('to=', to.fullPath, '| from=', from.fullPath);
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        let userinfo = JSON.parse(localStorage.getItem('userinfo'));
-        if (userinfo instanceof Object) {
-            localStorage.setItem('username', userinfo.name);
-            next();
+        if (!store.state.isLogin) {
+            _checkToken().then(res => {
+                store.dispatch("getUserInfo");
+                next();
+            }, function () {
+                next({
+                    path: '/login'
+                })
+            });
         } else {
-            next({
-                path: '/login'
+            _checkToken().then(function () {
+                store.dispatch("getUserInfo");
+                next();
+            }, function () {
+                next({
+                    path: '/login'
+                })
             });
         }
     } else {
-        next();
+        next(); // 确保一定要调用 next()
     }
 })
+
+/**
+ * Token验证，Token验证是否有效，时间验证过期
+ * */
+function _checkToken() {
+    return new Promise(function (resolve, reject) {
+        const token = CookiesApi.getToken();
+        const token_time = CookiesApi.getTokenTime();
+        const now_time = new Date().getTime();  // 毫秒数，token过期时间为 2小时
+        if (token && (now_time - token_time) < 1000 * 60 * 60 * 2) {
+            // 设置全局请求的token， 参考 https://segmentfault.com/q/1010000008595567/a-1020000008596744
+            CookiesApi.setToken(token);
+            CookiesApi.setTokenTime(token_time);
+            resolve();
+        } else {
+            CookiesApi.removeToken();
+            CookiesApi.removeTokenTime();
+            reject();
+        }
+    })
+}
 
 export default router

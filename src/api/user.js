@@ -9,7 +9,6 @@ export function postUser(data) {
         data
     });
 }
-
 export function getUserList(query) {
     return fetch({
         url: apiURL.users,
@@ -18,17 +17,18 @@ export function getUserList(query) {
     });
 }
 
-export function putUser(id, data) {
+export function patchUser(id, data) {
+    console.log(data);
     return fetch({
-        url: apiURL.staffmodify + id,
-        method: 'put',
+        url: apiURL.users + id + '/',
+        method: 'patch',
         data
     });
 }
 
 export function deleteUser(id) {
     return fetch({
-        url: apiURL.staffmodify + id,
+        url: apiURL.users + id,
         method: 'delete',
     });
 }
@@ -36,6 +36,7 @@ export function deleteUser(id) {
 
 //groups
 export function postGroup(data) {
+    console.log(data);
     return fetch({
         url: apiURL.groups,
         method: 'post',
@@ -53,7 +54,7 @@ export function getGroupList(query) {
 
 export function putGroup(id, data) {
     return fetch({
-        url: apiURL.groupmodify + id,
+        url: apiURL.groups + id + '/',
         method: 'put',
         data
     });
@@ -61,7 +62,7 @@ export function putGroup(id, data) {
 
 export function deleteGroup(id) {
     return fetch({
-        url: apiURL.groupmodify + id,
+        url: apiURL.groups + id,
         method: 'delete',
     });
 }
@@ -85,7 +86,7 @@ export function getRoleList(query) {
 
 export function putRole(id, data) {
     return fetch({
-        url: apiURL.rolemodify + id,
+        url: apiURL.roles + id + '/',
         method: 'put',
         data
     });
@@ -93,39 +94,7 @@ export function putRole(id, data) {
 
 export function deleteRole(id) {
     return fetch({
-        url: apiURL.rolemodify + id,
-        method: 'delete',
-    });
-}
-
-//staffroles
-export function postStaffRole(data) {
-    return fetch({
-        url: apiURL.staffroles,
-        method: 'post',
-        data
-    });
-}
-
-export function getStaffRoleList(query) {
-    return fetch({
-        url: apiURL.staffroles,
-        method: 'get',
-        params: query
-    });
-}
-
-export function putStaffRole(id, data) {
-    return fetch({
-        url: apiURL.staffrolemodify + id,
-        method: 'put',
-        data
-    });
-}
-
-export function deleteStaffRole(id) {
-    return fetch({
-        url: apiURL.staffrolemodify + id,
+        url: apiURL.roles + id,
         method: 'delete',
     });
 }
