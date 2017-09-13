@@ -56,27 +56,27 @@ export const routes = [
         ]
     },
     {
-        path: '/ansible',
+        path: '/salt',
         component: Layout,
-        redirect: '/ansible/index',
-        name: 'ansible管理',
+        redirect: '/salt/index',
+        name: 'salt管理',
         icon: 'leaf',
         meta: {requiresAuth: true},
         children: [
-            {path: 'runcmd', component: require('@/views/ansible/runcmd'), name: '执行命令'},
+            {path: 'runcmd', component: require('@/views/salt/runcmd'), name: '执行命令'},
         ]
     },
-    // {
-    //     path: '/chat',
-    //     component: Layout,
-    //     redirect: '/chat/index',
-    //     name: '聊天管理',
-    //     icon: 'wechat',
-    //     meta: {requiresAuth: true},
-    //     children: [
-    //         {path: 'chat', component: require('@/views/chat/index'), name: '聊天'},
-    //     ]
-    // },
+    {
+        path: '/chat',
+        component: Layout,
+        redirect: '/chat/index',
+        name: '聊天管理',
+        icon: 'wechat',
+        meta: {requiresAuth: true},
+        children: [
+            {path: 'chat', component: require('@/views/chat/index'), name: '聊天'},
+        ]
+    },
     {
         path: '/tools',
         component: Layout,
