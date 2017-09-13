@@ -3,7 +3,7 @@
         <template v-for="item in routes">
             <router-link v-if="!item.hidden&&item.noDropdown&&item.children.length>0"
                          :to="item.path+'/'+item.children[0].path">
-                <el-menu-item :index="item.path+'/'+item.children[0].path">
+                <el-menu-item :index="item.path+'/'+item.children[0].path" class="icon-title">
                     <icon v-if='item.icon' :name="item.icon" :scale="iconsize" class="wscn-icon"></icon>
                     {{item.children[0].name}}
                 </el-menu-item>
@@ -39,7 +39,7 @@
         },
         data () {
             return {
-                iconsize: 1.3
+                iconsize: 1.6
             }
         }
     }
@@ -58,4 +58,3 @@
         text-indent: 10px;
     }
 </style>
-

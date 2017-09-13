@@ -19,7 +19,6 @@ export function getUserList(query) {
 }
 
 export function putUser(id, data) {
-    console.log(data);
     return fetch({
         url: apiURL.staffmodify + id,
         method: 'put',

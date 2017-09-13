@@ -76,11 +76,11 @@
                 }
             }
             .main-container {
-                margin-left: 40px;
+                margin-left: 70px;
             }
         }
         .sidebar-wrapper {
-            width: 180px;
+            width: 200px;
             position: fixed;
             top: 0;
             bottom: 0;
@@ -100,7 +100,7 @@
         .main-container {
             min-height: 100%;
             transition: all .28s ease-out;
-            margin-left: 180px;
+            margin-left: 200px;
         }
     }
 </style>

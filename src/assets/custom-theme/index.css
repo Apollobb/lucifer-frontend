@@ -14,7 +14,13 @@ html {
 }
 
 .sidebar-container {
-    right: -200px;  /*侧边栏伸缩时，隐藏border*/
+    right: -70px;
+}
+
+.el-submenu__title{
+    padding-left: 28px!important;
+    width: 200px!important;      /*可控制白边*/
+    font-size: 16px;
 }
 
 /* 表格透明 */
