@@ -175,7 +175,6 @@
             color: #eeeeee;
             margin: 0px auto 40px auto;
             text-align: center;
-            font-weight: bold;
         }
 
         .login-form {
@@ -198,5 +197,4 @@
             color: #fff;
         }
     }
-
 </style>

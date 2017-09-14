@@ -11,6 +11,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="postForm('ruleForm')">执行</el-button>
+                <el-button v-show="showlog" type="success">执行中</el-button>
             </el-form-item>
         </el-form>
         <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
@@ -80,5 +81,9 @@
 
     .runlog {
         margin: 25px;
+    }
+
+    .shan {
+        text-decoration:blink
     }
 </style>

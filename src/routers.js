@@ -63,20 +63,21 @@ export const routes = [
         icon: 'leaf',
         meta: {requiresAuth: true},
         children: [
-            {path: 'runcmd', component: require('@/views/salt/runcmd'), name: '执行命令'},
+            {path: 'cmd_run', component: require('@/views/salt/cmd_run'), name: '执行命令'},
+            {path: 'install_soft', component: require('@/views/salt/install_soft'), name: '部署软件'},
         ]
     },
-    {
-        path: '/chat',
-        component: Layout,
-        redirect: '/chat/index',
-        name: '聊天管理',
-        icon: 'wechat',
-        meta: {requiresAuth: true},
-        children: [
-            {path: 'chat', component: require('@/views/chat/index'), name: '聊天'},
-        ]
-    },
+    // {
+    //     path: '/chat',
+    //     component: Layout,
+    //     redirect: '/chat/index',
+    //     name: '聊天管理',
+    //     icon: 'wechat',
+    //     meta: {requiresAuth: true},
+    //     children: [
+    //         {path: 'chat', component: require('@/views/chat/index'), name: '聊天'},
+    //     ]
+    // },
     {
         path: '/tools',
         component: Layout,
