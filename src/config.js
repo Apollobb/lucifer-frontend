@@ -50,4 +50,7 @@ module.exports = {
     //发布项目
     jobs: `${url}/api/jobs/`,
     jobgroups: `${url}/api/jobgroups/`,
+
+    //salt
+    cmdrun: `${url}/api/cmdrun/`,
 };

@@ -5,22 +5,24 @@
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
             </div>
             <el-form-item label="执行命令" prop="cmd">
-                <el-input v-model="ruleForm.cmd"></el-input>
+                <el-select v-model="ruleForm.cmd">
+                    <el-option v-for="item in options" :key="item" :value="item"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="postForm('ruleForm')">执行</el-button>
             </el-form-item>
         </el-form>
-        <el-collapse v-model="activeNames" class="runlog">
+        <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
             <el-collapse-item title="运行日志" :name="status">
-                主机: <p>{{ruleForm.hosts}}</p>
-                结果: <p>{{ruleForm.cmd}}</p>
+                <p v-for="item in results" :key="item">{{item}}</p>
             </el-collapse-item>
         </el-collapse>
     </el-card>
 </template>
 <script>
     import sesectHosts from '../components/hosttransfer.vue'
+    import {saltCmdrun} from "@/api/salt"
 
     export default {
         components: {sesectHosts},
@@ -29,6 +31,7 @@
             return {
                 activeNames: ['open'],
                 status: 'close',
+                showlog: false,
                 ruleForm: {
                     hosts: [],
                     cmd: '',
@@ -38,6 +41,8 @@
                         {required: true, message: '请输入命令', trigger: 'blur'},
                     ]
                 },
+                results: [],
+                options: ['ping www.baidu.com', 'ping www.taobao.com']
             };
         },
 
@@ -46,7 +51,19 @@
         methods: {
             postForm(formName) {
                 this.status = 'open';
-                console.log(formName)
+                this.showlog = true;
+                this.$refs.ruleForm.validate(valid => {
+                    if (valid) {
+                        saltCmdrun(this.ruleForm).then(response => {
+                            this.results = response.data;
+                        }).catch(error => {
+                            console.log(error);
+                        });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             },
             getHosts(data) {
                 this.ruleForm.hosts = data
@@ -57,7 +74,7 @@
 
 <style lang='scss'>
     .runcmd {
-        width: 680px;
+        width: 80%;
         margin-left: 40px;
     }
 
