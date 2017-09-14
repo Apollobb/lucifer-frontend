@@ -65,3 +65,12 @@ html {
 .el-breadcrumb__item__inner a {
     color: rgba(5, 97, 255, 0.73);
 }
+
+
+/* cmd */
+.el-collapse-item__content {
+    background-color: #000000;
+    color: #18ff1e;
+    word-spacing: 5px;
+    border-radius: 5px;
+}

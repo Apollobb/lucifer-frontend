@@ -42,7 +42,7 @@
                     ]
                 },
                 results: [],
-                options: ['ping www.baidu.com', 'ping www.taobao.com']
+                options: ['ping -c 4 www.baidu.com', 'ping -c 4 www.taobao.com', 'df -h', 'free -m']
             };
         },
 
