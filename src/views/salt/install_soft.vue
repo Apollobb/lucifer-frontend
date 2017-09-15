@@ -45,17 +45,10 @@
                 softname: '',
                 ruleForm: {
                     hosts: [],
-                    cmd: '',
-                },
-                rules: {
-                    cmd: [
-                        {required: true, message: '请输入命令', trigger: 'blur'},
-                    ]
+                    softname: '',
                 },
                 results: [],
-                options: ['ping -c 4 www.baidu.com', 'ping -c 4 www.taobao.com', 'df -h', 'free -m'],
                 btns: ['zabbix', 'nginx', 'python', 'tomcat', 'php'],
-                btnscolor: ['violet-btn', 'bllue-btn', 'pink-btn', 'red-btn', 'green-btn', 'tiffany-btn', 'yellow-btn']
             };
         },
 
