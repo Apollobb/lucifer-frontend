@@ -54,7 +54,7 @@
                 ruleForm: {
                     hosts: [],
                     cmd: '',
-                    username: 'admin'
+                    user: 'admin'
                 },
                 rules: {
                     cmd: [
@@ -68,8 +68,8 @@
                     {name: '查看磁盘', cmd: 'df -h'},
                     {name: '查看内存', cmd: 'free -m'},
                     {
-                        name: '乘法口诀',
-                        cmd: 'for ((i=1;i<=9;i++)); do for ((j=1;j<=i;j++)); do result=$(($i*$j));echo -n "$i"x"$j"=$result" ";done;echo;done'
+                        name: '发发乘法口诀',
+                        cmd: 'for ((i=1;i<=8;i++)); do for ((j=1;j<=i;j++)); do result=$(($i*$j));echo -n "$i"x"$j"=$result" ";done;echo;done'
                     }
                 ],
             };
