@@ -4,10 +4,11 @@
             <div>
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
             </div>
+            <el-form-item>
+                <el-button type="danger" size="small" v-for="item in commands" @click="changeCmd(item.cmd)">{{item.name}}</el-button>
+            </el-form-item>
             <el-form-item label="执行命令" prop="cmd">
-                <el-select v-model="ruleForm.cmd">
-                    <el-option v-for="item in options" :key="item" :value="item"></el-option>
-                </el-select>
+                <el-input v-model="ruleForm.cmd"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="postForm('ruleForm')">执行</el-button>
@@ -24,11 +25,28 @@
 <script>
     import sesectHosts from '../components/hosttransfer.vue'
     import {saltCmdrun} from "@/api/salt"
+    import ElInput from "../../../node_modules/vue-data-tables/node_modules/element-ui/packages/input/src/input";
 
     export default {
-        components: {sesectHosts},
+        components: {ElInput, sesectHosts},
 
         data() {
+            const denycmd = ['rm', 'shutdown', 'init', 'rmdir', 'mkdir'];
+            const cmdRule = (rule, value, callback) => {
+                let num = 1;
+                for (var i in denycmd) {
+                    if (value.indexOf(denycmd[i]) > -1) {
+                        num = 0;
+                    } else {
+                        num = num * num
+                    }
+                }
+                if (num==0) {
+                    callback(new Error('你坏坏！'));
+                } else {
+                    callback();
+                }
+            };
             return {
                 activeNames: ['open'],
                 status: 'close',
@@ -40,10 +58,19 @@
                 rules: {
                     cmd: [
                         {required: true, message: '请输入命令', trigger: 'blur'},
+                        {validator: cmdRule, trigger: 'blur'}
                     ]
                 },
                 results: [],
-                options: ['ping -c 4 www.baidu.com', 'ping -c 4 www.taobao.com', 'df -h', 'free -m']
+                commands: [
+                    {name: 'ping', cmd: 'ping -c 4 www.baidu.com'},
+                    {name: '查看磁盘', cmd: 'df -h'},
+                    {name: '查看内存', cmd: 'free -m'},
+                    {
+                        name: '乘法口诀',
+                        cmd: 'for ((i=1;i<=9;i++)); do for ((j=1;j<=i;j++)); do result=$(($i*$j));echo -n "$i"x"$j"=$result" ";done;echo;done'
+                    }
+                ],
             };
         },
 
@@ -68,6 +95,9 @@
             },
             getHosts(data) {
                 this.ruleForm.hosts = data
+            },
+            changeCmd(cmd) {
+                this.ruleForm.cmd = cmd
             }
         }
     }
@@ -84,6 +114,6 @@
     }
 
     .shan {
-        text-decoration:blink
+        text-decoration: blink
     }
 </style>
