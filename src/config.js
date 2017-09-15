@@ -10,8 +10,8 @@ if (process.env.NODE_ENV === 'production') {
     };
 } else {
     CONFIG = {
-        //apiUrl: "http://localhost:8000"
-        apiUrl: "http://172.16.33.222:8080"
+        apiUrl: "http://localhost:8000"
+        // apiUrl: "http://172.16.33.222:8080"
     };
 }
 
