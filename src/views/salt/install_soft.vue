@@ -30,7 +30,7 @@
 </template>
 <script>
     import sesectHosts from '../components/hosttransfer.vue'
-    import {saltCmdrun} from "@/api/salt"
+    import {postCmdrun} from "@/api/salt"
 
     export default {
         components: {
@@ -60,7 +60,7 @@
                 this.showlog = true;
                 this.$refs.ruleForm.validate(valid => {
                     if (valid) {
-                        saltCmdrun(this.ruleForm).then(response => {
+                        postCmdrun(this.ruleForm).then(response => {
                             this.results = response.data;
                         }).catch(error => {
                             console.log(error);
