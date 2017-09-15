@@ -55,9 +55,6 @@
         created() {
         },
         methods: {
-            color() {
-                return this.btnscolor[Math.floor(Math.random()*this.btnscolor.length)];
-            },
             postForm(formName) {
                 this.status = 'open';
                 this.showlog = true;
