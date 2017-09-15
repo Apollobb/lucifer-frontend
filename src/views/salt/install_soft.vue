@@ -7,7 +7,7 @@
             </div>
             <el-row class="software">
                 <el-col :span="4" class='text-center' v-for="item in btns" :key="item">
-                    <el-button class="pan-btn blue-btn" @click="selectSoft(item)">{{item}}</el-button>
+                    <el-button class="pan-btn yellow-btn" @click="selectSoft(item)">{{item}}</el-button>
                 </el-col>
             </el-row>
         </el-card>
@@ -16,8 +16,8 @@
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
             </div>
             <el-form-item>
-                <el-button type="primary" @click="postForm('ruleForm')">执行</el-button>
-                <el-button v-show="showlog" type="success">执行中</el-button>
+                <el-button type="primary" @click="postForm('ruleForm')">开始安装</el-button>
+                <el-button v-show="showlog" type="success">安装中</el-button>
             </el-form-item>
         </el-form>
         <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
