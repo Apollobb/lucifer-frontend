@@ -5,7 +5,7 @@
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
             </div>
             <el-form-item>
-                <el-button type="danger" size="small" v-for="item in commands" @click="changeCmd(item.cmd)">{{item.name}}</el-button>
+                <el-button type="danger" size="small" v-for="item in commands" :key="item.name" @click="changeCmd(item.cmd)">{{item.name}}</el-button>
             </el-form-item>
             <el-form-item label="执行命令" prop="cmd">
                 <el-input v-model="ruleForm.cmd"></el-input>
@@ -31,7 +31,7 @@
         components: {ElInput, sesectHosts},
 
         data() {
-            const denycmd = ['rm', 'shutdown', 'init', 'rmdir', 'mkdir', 'reboot', 'iptables', 'halt', 'mv', 'wget', 'mk', '>', 'dev', '&', 'dd', '^', '$'];
+            const denycmd = ['rm', 'shutdown', 'init', 'rmdir', 'mkdir', 'reboot', 'iptables', 'halt', 'mv', 'wget', 'mk', '>', 'dev', '&', 'dd', '^'];
             const cmdRule = (rule, value, callback) => {
                 let num = 1;
                 for (var i in denycmd) {
@@ -54,6 +54,7 @@
                 ruleForm: {
                     hosts: [],
                     cmd: '',
+                    username: 'admin'
                 },
                 rules: {
                     cmd: [
