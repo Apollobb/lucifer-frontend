@@ -31,7 +31,7 @@
         components: {ElInput, sesectHosts},
 
         data() {
-            const denycmd = ['rm', 'shutdown', 'init', 'rmdir', 'mkdir', 'reboot', 'iptables', 'halt', 'mv', 'wget', 'mk', '>', 'dev', '&', 'dd', '^'];
+            const denycmd = ['rm','rf','shutdown', 'reboot','init', 'halt','rmdir', 'mkdir',  'iptables', 'mv', 'wget', 'mk', '>', 'dev', '&', 'dd', '^'];
             const cmdRule = (rule, value, callback) => {
                 let num = 1;
                 for (var i in denycmd) {
