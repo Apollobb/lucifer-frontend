@@ -6,23 +6,8 @@
                 <el-button style="float: right;" type="danger">黑色代表被选中</el-button>
             </div>
             <el-row class="software">
-                <el-col :span="4" class='text-center'>
-                    <el-button class="pan-btn light-blue-btn">Zabbix</el-button>
-                </el-col>
-                <el-col :span="4" class='text-center'>
-                    <el-button class="pan-btn pink-btn">Nginx</el-button>
-                </el-col>
-                <el-col :span="4" class='text-center'>
-                    <el-button class="pan-btn green-btn">Tomcat</el-button>
-                </el-col>
-                <el-col :span="4" class='text-center'>
-                    <el-button class="pan-btn tiffany-btn">Php</el-button>
-                </el-col>
-                <el-col :span="4" class='text-center'>
-                    <el-button class="pan-btn yellow-btn">Pyenv</el-button>
-                </el-col>
-                <el-col :span="4" class='text-center'>
-                    <el-button class="pan-btn blue-btn">Mysql</el-button>
+                <el-col :span="4" class='text-center' v-for="item in btns" :key="item">
+                    <el-button class="pan-btn blue-btn">{{item}}</el-button>
                 </el-col>
             </el-row>
         </el-card>
@@ -66,13 +51,18 @@
                     ]
                 },
                 results: [],
-                options: ['ping -c 4 www.baidu.com', 'ping -c 4 www.taobao.com', 'df -h', 'free -m']
+                options: ['ping -c 4 www.baidu.com', 'ping -c 4 www.taobao.com', 'df -h', 'free -m'],
+                btns: ['zabbix', 'nginx', 'python', 'tomcat', 'pyenv', 'php'],
+                btnscolor: ['violet-btn', 'bllue-btn', 'pink-btn', 'red-btn', 'green-btn', 'tiffany-btn', 'yellow-btn']
             };
         },
 
         created() {
         },
         methods: {
+            color() {
+                return this.btnscolor[Math.floor(Math.random()*this.btnscolor.length)];
+            },
             postForm(formName) {
                 this.status = 'open';
                 this.showlog = true;

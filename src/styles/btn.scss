@@ -1,5 +1,5 @@
-$blue: #8b2ef8;
-$light-blue:#3A71A8;
+$violet: #8b2ef8;
+$blue: #58abff;
 $red:#C03639;
 $pink: #E65D6E;
 $green: #30B08F;
@@ -19,12 +19,12 @@ $panGreen: #30B08F;
 }
 
 
-.blue-btn {
-  @include colorBtn($blue)
+.violet-btn {
+  @include colorBtn($violet)
 }
 
-.light-blue-btn{
-  @include colorBtn($light-blue)
+.blue-btn{
+  @include colorBtn($blue)
 }
 
 
