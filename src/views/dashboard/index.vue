@@ -16,10 +16,10 @@
 
         <el-row class="btn-group">
             <el-col :span="4" class='text-center'>
-                <router-link class="pan-btn blue-btn" to="/components/index">Components</router-link>
+                <router-link class="pan-btn violet-btn" to="/components/index">Components</router-link>
             </el-col>
             <el-col :span="4" class='text-center'>
-                <router-link class="pan-btn light-blue-btn" to="/charts/index">Charts</router-link>
+                <router-link class="pan-btn blue-btn" to="/charts/index">Charts</router-link>
             </el-col>
             <el-col :span="4" class='text-center'>
                 <router-link class="pan-btn pink-btn" to="/excel/download">Excel</router-link>

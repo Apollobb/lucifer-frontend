@@ -3,11 +3,11 @@
         <el-card class="software">
             <div slot="header" class="clearfix">
                 <span>选择需要安装的软件</span>
-                <el-button style="float: right;" type="danger">黑色代表被选中</el-button>
+                <el-button style="float: right;" size="small" type="danger">黑色代表被选中</el-button>
             </div>
             <el-row class="software">
                 <el-col :span="4" class='text-center' v-for="item in btns" :key="item">
-                    <el-button class="pan-btn blue-btn">{{item}}</el-button>
+                    <el-button class="pan-btn blue-btn" @click="selectSoft(item)">{{item}}</el-button>
                 </el-col>
             </el-row>
         </el-card>
@@ -22,7 +22,8 @@
         </el-form>
         <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
             <el-collapse-item title="运行日志" :name="status">
-                <p v-for="item in results" :key="item">{{item}}</p>
+                即将安装的软件：<span class="select">{{softname}}</span>
+                安装的服务器：<span v-for="item in ruleForm.hosts" class="select">{{item}}</span>
             </el-collapse-item>
         </el-collapse>
     </el-card>
@@ -41,6 +42,7 @@
                 activeNames: ['open'],
                 status: 'close',
                 showlog: false,
+                softname: '',
                 ruleForm: {
                     hosts: [],
                     cmd: '',
@@ -52,7 +54,7 @@
                 },
                 results: [],
                 options: ['ping -c 4 www.baidu.com', 'ping -c 4 www.taobao.com', 'df -h', 'free -m'],
-                btns: ['zabbix', 'nginx', 'python', 'tomcat', 'pyenv', 'php'],
+                btns: ['zabbix', 'nginx', 'python', 'tomcat', 'php'],
                 btnscolor: ['violet-btn', 'bllue-btn', 'pink-btn', 'red-btn', 'green-btn', 'tiffany-btn', 'yellow-btn']
             };
         },
@@ -81,6 +83,9 @@
             },
             getHosts(data) {
                 this.ruleForm.hosts = data
+            },
+            selectSoft(data) {
+                this.softname = data
             }
         }
     }
@@ -88,6 +93,7 @@
 
 <style lang='scss'>
     .software {
+        margin: 0 30px;
         .pan-btn {
             padding: 14px;
             margin-right: 0;
@@ -105,6 +111,11 @@
 
     .runlog {
         margin: 25px;
+        .select {
+            color: #f423ff;
+            font-size: 20px;
+            margin-right: 20px;
+        }
     }
 
     .shan {
