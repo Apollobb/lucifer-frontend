@@ -1,22 +1,31 @@
 <template xmlns="http://www.w3.org/1999/html">
     <el-card class="runcmd">
-        <el-row class="software btn-group">
-            <el-col :span="4" class='text-center'>
-                <el-button class="pan-btn light-blue-btn">Zabbix</el-button>
-            </el-col>
-            <el-col :span="4" class='text-center'>
-                <el-button class="pan-btn pink-btn">Nginx</el-button>
-            </el-col>
-            <el-col :span="4" class='text-center'>
-                <el-button class="pan-btn green-btn">Tomcat</el-button>
-            </el-col>
-            <el-col :span="4" class='text-center'>
-                <el-button class="pan-btn tiffany-btn">Php</el-button>
-            </el-col>
-            <el-col :span="4" class='text-center'>
-                <el-button class="pan-btn yellow-btn">Theme</el-button>
-            </el-col>
-        </el-row>
+        <el-card class="software">
+            <div slot="header" class="clearfix">
+                <span>选择需要安装的软件</span>
+                <el-button style="float: right;" type="danger">黑色代表被选中</el-button>
+            </div>
+            <el-row class="software">
+                <el-col :span="4" class='text-center'>
+                    <el-button class="pan-btn light-blue-btn">Zabbix</el-button>
+                </el-col>
+                <el-col :span="4" class='text-center'>
+                    <el-button class="pan-btn pink-btn">Nginx</el-button>
+                </el-col>
+                <el-col :span="4" class='text-center'>
+                    <el-button class="pan-btn green-btn">Tomcat</el-button>
+                </el-col>
+                <el-col :span="4" class='text-center'>
+                    <el-button class="pan-btn tiffany-btn">Php</el-button>
+                </el-col>
+                <el-col :span="4" class='text-center'>
+                    <el-button class="pan-btn yellow-btn">Pyenv</el-button>
+                </el-col>
+                <el-col :span="4" class='text-center'>
+                    <el-button class="pan-btn blue-btn">Mysql</el-button>
+                </el-col>
+            </el-row>
+        </el-card>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="ruleForm">
             <div>
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
@@ -36,11 +45,9 @@
 <script>
     import sesectHosts from '../components/hosttransfer.vue'
     import {saltCmdrun} from "@/api/salt"
-    import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
 
     export default {
         components: {
-            ElButton,
             sesectHosts
         },
 
@@ -91,9 +98,13 @@
 
 <style lang='scss'>
     .software {
-        margin-left: 20px;
         .pan-btn {
             padding: 14px;
+            margin-right: 0;
+            &:focus {
+                color: #ffffff;
+                background: #000000;
+            }
         }
     }
 
