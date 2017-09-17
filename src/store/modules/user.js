@@ -1,12 +1,11 @@
 import {login, logout, getInfo} from 'api/auth';
-import * as CookiesApi from 'utils/auth';
 
 const user = {
     state: {
         code: '',
-        token: CookiesApi.getToken(),
+        token: localStorage.getItem('token'),
         islogin: false,
-        userinfo: CookiesApi.getUserinfo(),
+        userinfo: localStorage.getItem('userinfo'),
     },
 
     mutations: {
@@ -38,8 +37,8 @@ const user = {
             return new Promise((resolve, reject) => {
                 login(userInfo).then(response => {
                     const cur_date = new Date().getTime();
-                    CookiesApi.setToken(response.data.token);
-                    CookiesApi.setTokenTime(cur_date);
+                    localStorage.setItem('token', response.data.token)
+                    localStorage.setItem('token_time', cur_date);
                     commit('SET_TOKEN', response.data.token);
                     commit('SET_ISLOGIN', true);
                     commit('SET_TOKEN_TIME', cur_date);
@@ -54,18 +53,9 @@ const user = {
         LogOut({commit, state}) {
             return new Promise((resolve, reject) => {
                 commit('SET_TOKEN', ''),
-                CookiesApi.removeToken();
-                CookiesApi.removeUserinfo();
-                resolve();
-            })
-        },
-
-        // 前端 登出
-        FedLogOut({commit}) {
-            return new Promise(resolve => {
-                commit('SET_TOKEN', '');
-                CookiesApi.removeToken();
-                CookiesApi.removeUserinfo();
+                commit('SET_USERINFO', ''),
+                localStorage.removeItem('token');
+                localStorage.removeItem('userinfo');
                 resolve();
             })
         },
@@ -76,7 +66,8 @@ const user = {
                 getInfo(username).then(response => {
                     const data = response.data.results[0];
                     commit('SET_USERINFO', data);
-                    CookiesApi.setUserinfo(data);
+                    localStorage.setItem('userinfo', data);
+                    localStorage.getItem('userinfo');
                     resolve(response);
                 }).catch(error => {
                     reject(error);

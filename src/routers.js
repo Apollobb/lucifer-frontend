@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from './store'
-import * as CookiesApi from 'utils/auth'
 // in development env not use Lazy Loading,because Lazy Loading large page will cause webpack hot update too slow.so only in production use Lazy Loading
 
 /* layout */
@@ -148,17 +147,15 @@ router.beforeEach((to, from, next) => {
  * */
 function _checkToken() {
     return new Promise(function (resolve, reject) {
-        const token = CookiesApi.getToken();
-        const token_time = CookiesApi.getTokenTime();
+        const token = localStorage.getItem('token');
+        const token_time = localStorage.getItem('token_time');
         const now_time = new Date().getTime();  // 毫秒数，token过期时间为 2小时
         if (token && (now_time - token_time) < 1000 * 60 * 60 * 2) {
             // 设置全局请求的token， 参考 https://segmentfault.com/q/1010000008595567/a-1020000008596744
-            CookiesApi.setToken(token);
-            CookiesApi.setTokenTime(token_time);
             resolve();
         } else {
-            CookiesApi.removeToken();
-            CookiesApi.removeTokenTime();
+            localStorage.removeItem('token');
+            localStorage.removeItem('token_time');
             reject();
         }
     })
