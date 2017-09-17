@@ -7,7 +7,7 @@
             <screenfull class='screenfull'></screenfull>
             <el-dropdown class="avatar-container" trigger="hover">
                 <div class="avatar-wrapper">
-                    <img class="user-avatar" :src="'upload' + UserInfo.avatar+'?imageView2/1/w/80/h/80'">
+                    <img class="user-avatar" :src="'upload' + avatar+'?imageView2/1/w/80/h/80'">
                     <i class="el-icon-caret-bottom"></i>
                 </div>
                 <el-dropdown-menu class="user-dropdown" slot="dropdown">
@@ -39,7 +39,7 @@
         </el-dialog>
 
         <el-dialog title="修改头像" :visible.sync="changeava" size="tiny">
-            <avatar-upload :userinfo="UserInfo"></avatar-upload>
+            <avatar-upload :avatar="avatar"></avatar-upload>
         </el-dialog>
     </div>
 </template>
@@ -85,7 +85,6 @@
                 }
             };
             return {
-                UserInfo: '',
                 ruleForm: {
                     new_password1: '',
                     new_password2: ''
@@ -107,17 +106,12 @@
         computed: {
             ...mapGetters([
                 'sidebar',
-                'userinfo',
+                'avatar',
+                'roles',
             ]),
-        },
-        created() {
-            this.getUserinfo();
         },
 
         methods: {
-            getUserinfo() {
-                this.UserInfo = JSON.parse(this.userinfo)
-            },
             toggleSideBar() {
                 this.$store.dispatch('ToggleSideBar')
             },

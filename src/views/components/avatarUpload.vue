@@ -5,10 +5,7 @@
         <el-button class="upload" type="primary" icon="upload"
                    style="position: absolute;bottom: 15px;margin-left: 40px;"
                    @click="imagecropperShow=true">修改头像
-
         </el-button>
-
-
         <image-cropper :width="300" :height="300" url="https://httpbin.org/post" @close='close'
                        @crop-upload-success="cropSuccess" :key="imagecropperKey"
                        v-show="imagecropperShow"></image-cropper>
@@ -24,12 +21,12 @@
     export default {
         components: {ImageCropper, PanThumb},
 
-        props: ['userinfo'],
+        props: ['avatar'],
         data() {
             return {
                 imagecropperShow: false,
                 imagecropperKey: 0,
-                image: 'upload' + this.userinfo.avatar
+                image: 'upload' + this.avatar
             }
         },
 
@@ -38,7 +35,6 @@
                 console.log(resData);
                 this.imagecropperShow = false;
                 this.imagecropperKey = this.imagecropperKey + 1;
-                //this.image = resData.file;
                 const data = {
                     avatar: resData.filepath
                 };
