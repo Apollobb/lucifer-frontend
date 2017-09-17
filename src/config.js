@@ -53,5 +53,6 @@ module.exports = {
     jobgroups: `${url}/api/jobgroups/`,
 
     //salt
-    cmdrun: `${url}/api/cmdrun/`,
+    getcmdrun: `${url}/api/saltcmdrun/`,
+    postcmdrun: `${url}/api/postcmdrun/`,
 };

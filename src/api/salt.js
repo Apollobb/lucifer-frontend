@@ -4,7 +4,7 @@ import apiURL from '@/config'
 // cmdrun
 export function postCmdrun(data) {
   return fetch({
-    url: apiURL.cmdrun,
+    url: apiURL.postcmdrun,
     method: 'post',
     data
   });
@@ -12,7 +12,7 @@ export function postCmdrun(data) {
 
 export function getCmdrun(query) {
     return fetch({
-        url: apiURL.cmdrun,
+        url: apiURL.getcmdrun,
         method: 'get',
         params: query
     });

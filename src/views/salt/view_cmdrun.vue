@@ -1,15 +1,20 @@
 <template>
     <div>
         <div class="head-lavel">
-            <div class="table-search">
-                <el-input
-                        placeholder="搜索 ..."
-                        icon="search"
-                        v-model="searchdata"
-                        @keyup.enter.native="searchClick"
-                        :on-icon-click="searchClick">
-                </el-input>
-            </div>
+                <div class="table-search">
+                    <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
+                              placeholder="用户"
+                              v-model="listQuery.user" icon="circle-close"
+                              :on-icon-click="handleIconClick">
+                    </el-input>
+                    <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
+                              placeholder="命令"
+                              v-model="listQuery.cmd" icon="circle-close"
+                              :on-icon-click="handleIconClick">
+                    </el-input>
+                    <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
+                    </el-button>
+                </div>
         </div>
         <div>
             <el-table :data="tableData" border style="width: 100%">
@@ -50,9 +55,14 @@
                 tabletotal: 0,
                 searchdata: '',
                 currentPage: 1,
-                limit: LIMIT,
                 offset: '',
                 pagesize: [10, 25, 50, 100],
+                listQuery: {
+                    offset: 0,
+                    limit: LIMIT,
+                    cmd: '',
+                    user: '',
+                },
             }
         },
 
@@ -65,11 +75,11 @@
                 const parms = {
                     limit: this.limit,
                     offset: this.offset,
-                    name__contains: this.searchdata
+                    cmd__contains: this.listQuery.cmd,
+                    user__username__contains: this.listQuery.user
                 };
                 getCmdrun(parms).then(response => {
-                    console.log(response.data)
-                    this.tableData = response.data;
+                    this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
             },
