@@ -33,6 +33,7 @@
     import sesectHosts from '../components/hosttransfer.vue'
     import {postCmdrun} from '@/api/salt'
     import ViewCmdrun from './view_cmdrun.vue'
+    import {wsScheme, wsUrl} from '@/config'
 
     export default {
         components: {sesectHosts, ViewCmdrun},
@@ -120,7 +121,7 @@
         }
     }
 
-    const ws = new WebSocket("ws://" + '1.1.1.101:8000' + "/");
+    const ws = new WebSocket(wsScheme + wsUrl);
 
     ws.onopen = function open() {
       console.log('WebSockets connection created.');

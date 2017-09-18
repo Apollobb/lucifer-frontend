@@ -3,6 +3,7 @@
  */
 
 let CONFIG;
+let rest_url = 'api.lucifer.com';
 // if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'production') {
     CONFIG = {
@@ -10,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
     };
 } else {
     CONFIG = {
-        apiUrl: "http://api.lucifer.com:8000"
+        apiUrl: "http://"+ rest_url + ":8000"
     };
 }
 
@@ -19,6 +20,8 @@ const url = CONFIG.apiUrl;
 
 module.exports = {
     apiUrl: url,
+    wsScheme: 'ws://',  // or wss
+    wsUrl: rest_url + ":8000",
 
     //数据分页限制
     LIMIT: 10,
