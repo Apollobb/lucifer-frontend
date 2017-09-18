@@ -5,7 +5,10 @@
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
             </div>
             <el-form-item label="命令列表">
-                <el-button type="danger" size="small" v-for="item in commands" :key="item" @click="changeCmd(item.cmd)">{{item.name}}</el-button>
+                <el-button type="danger" size="small" v-for="item in commands" :key="item" @click="changeCmd(item.cmd)">
+                    {{item.name}}
+
+                </el-button>
             </el-form-item>
             <el-form-item label="执行命令" prop="cmd">
                 <el-input v-model="ruleForm.cmd" placeholder="防止恶意命令，暂时禁止直接输入" disabled></el-input>
@@ -46,7 +49,7 @@
                         num = num * num
                     }
                 }
-                if (num==0) {
+                if (num == 0) {
                     callback(new Error(this.results));
                 } else {
                     callback();
@@ -82,7 +85,7 @@
                     {name: '移动', cmd: 'mv aaa /tmp'},
                     {name: '防火墙', cmd: 'iptables -I INPUT -p tcp -j DORP'},
                 ],
-                denycmd: ['rm','rf','shutdown', 'reboot','init', 'halt','rmdir', 'mkdir',  'iptables', 'mv', 'wget', 'mk', '>', 'dev', '&', 'dd', '^'],
+                denycmd: ['rm', 'rf', 'shutdown', 'reboot', 'init', 'halt', 'rmdir', 'mkdir', 'iptables', 'mv', 'wget', 'mk', '>', 'dev', '&', 'dd', '^'],
             }
         },
 
@@ -116,6 +119,28 @@
             }
         }
     }
+
+    const ws = new WebSocket("ws://" + '1.1.1.101:8000' + "/");
+
+    ws.onopen = function open() {
+      console.log('WebSockets connection created.');
+    };
+
+    ws.onmessage = function (e) {
+        console.log(e.data)
+    };
+
+    const msg = {
+        stream: "cmdrun",
+        payload: {
+            action: "create",
+            data: {
+                cmd: "ls"
+            },
+            request_id: "2"
+        }
+    };
+    ws.send(JSON.stringify(msg));
 </script>
 
 <style lang='scss'>
