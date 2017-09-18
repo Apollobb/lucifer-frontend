@@ -141,7 +141,7 @@
             request_id: "2"
         }
     };
-    ws.send(JSON.stringify(msg));
+    //ws.send(JSON.stringify(msg));
 </script>
 
 <style lang='scss'>

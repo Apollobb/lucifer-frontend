@@ -5,12 +5,12 @@
                     <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
                               placeholder="用户"
                               v-model="listQuery.user" icon="circle-close"
-                              :on-icon-click="handleIconClick">
+                              :on-icon-click="handleUserClick">
                     </el-input>
                     <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
                               placeholder="命令"
                               v-model="listQuery.cmd" icon="circle-close"
-                              :on-icon-click="handleIconClick">
+                              :on-icon-click="handleCmdClick">
                     </el-input>
                     <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
                     </el-button>
@@ -35,7 +35,7 @@
                     @current-change="handleCurrentChange"
                     :current-page.sync="currentPage"
                     :page-sizes="pagesize"
-                    :page-size="limit"
+                    :page-size="listQuery.limit"
                     layout="prev, pager, next, sizes"
                     :total="tabletotal">
             </el-pagination>
@@ -94,6 +94,12 @@
             handleCurrentChange(val) {
                 this.offset = val - 1;
                 this.fetchData();
+            },
+            handleUserClick() {
+                this.listQuery.user = ''
+            },
+            handleCmdClick() {
+                this.listQuery.cmd = ''
             }
         },
     }
