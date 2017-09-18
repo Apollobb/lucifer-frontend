@@ -10,9 +10,7 @@ if (process.env.NODE_ENV === 'production') {
     };
 } else {
     CONFIG = {
-        // apiUrl: "http://localhost:8000"
-        // apiUrl: "http://172.16.33.222:8000"
-        apiUrl: "http://1.1.1.101:8000"
+        apiUrl: "http://api.lucifer.com:8000"
     };
 }
 
@@ -33,7 +31,6 @@ module.exports = {
     uploads: `${url}/api/upload/`,
 
     //登录
-    //login: `${url}/api-token-auth/`,
     login: `${url}/api-token-auth/`,
     changePassword: `${url}/api/changepasswd/`,
 
