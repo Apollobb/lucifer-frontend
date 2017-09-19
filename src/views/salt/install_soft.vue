@@ -11,7 +11,7 @@
                 </el-col>
             </el-row>
         </el-card>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="ruleForm">
+        <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="ruleForm">
             <div>
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
             </div>
