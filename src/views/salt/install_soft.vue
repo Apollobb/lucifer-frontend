@@ -3,7 +3,7 @@
         <el-card class="software">
             <div slot="header" class="clearfix">
                 <span>选择需要安装的软件</span>
-                <el-button style="float: right;" size="small" type="danger">黑色代表被选中</el-button>
+                (<span style="color: red">黑色代表被选中</span>)
             </div>
             <el-row class="software">
                 <el-col :span="4" class='text-center' v-for="item in btns" :key="item">
