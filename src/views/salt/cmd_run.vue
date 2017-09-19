@@ -9,8 +9,6 @@
                     {{item.name}}
 
 
-
-
                 </el-button>
             </el-form-item>
             <el-form-item label="执行命令" prop="cmd">
@@ -96,7 +94,9 @@
                     payload: {
                         action: "create",
                         data: {
-                            cmdrun: this.ruleForm
+                            hosts: [],
+                            cmd: 'ls /tmp',
+                            user: 'admin'
                         }
                     }
                 }
@@ -104,6 +104,7 @@
         },
 
         created() {
+            this.wsInit();  //ws 初始化
         },
         methods: {
             postForm(formName) {
@@ -111,13 +112,13 @@
                 this.showlog = true;
                 this.$refs.ruleForm.validate(valid => {
                     if (valid) {
-//                        this.wsInit();  //ws 初始化
-//                        this.ws.send(JSON.stringify(this.wsmsg));
-                        postCmdrun(this.ruleForm).then(response => {
-                            this.results = response.data;
-                        }).catch(error => {
-                            console.log(error);
-                        });
+                        this.wsInit();  //ws 初始化
+                        this.ws.send(JSON.stringify(this.wsmsg));
+//                        postCmdrun(this.ruleForm).then(response => {
+//                            this.results = response.data;
+//                        }).catch(error => {
+//                            console.log(error);
+//                        });
                     } else {
                         console.log('error submit!!');
                         return false;
