@@ -40,7 +40,7 @@
                 </el-pagination>
             </div>
         </el-card>
-        <el-dialog title="新建主机组" :visible.sync="addGroup" size="tiny">
+        <el-dialog :visible.sync="addGroup" size="tiny">
             <add-group @formdata="addGroupSubmit"></add-group>
         </el-dialog>
         <el-dialog :visible.sync="viewGroup" size="tiny">

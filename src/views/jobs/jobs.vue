@@ -71,13 +71,13 @@
                 </el-pagination>
             </div>
         </el-card>
-        <el-dialog :title="textMap[dialogStatus]" :visible.sync="addForm" size="small">
+        <el-dialog :visible.sync="addForm" size="small">
             <add-project @DialogStatus="getDialogStatus"></add-project>
         </el-dialog>
-        <el-dialog :title="textMap[dialogStatus]" :visible.sync="editForm" size="small">
+        <el-dialog :visible.sync="editForm" size="small">
             <edit-project :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-project>
         </el-dialog>
-        <el-dialog :title="textMap[dialogStatus]" :visible.sync="runForm" size="tiny">
+        <el-dialog :visible.sync="runForm" size="tiny">
             <run-project :hosts="rowdata.hosts" :deploy_env="deploy_env" :code_branch="code_branch" @DialogStatus="getDialogStatus"></run-project>
         </el-dialog>
     </div>
@@ -112,12 +112,6 @@
                 editForm: false,
                 runForm: false,
                 rowdata: {},
-                dialogStatus: '',
-                textMap: {
-                    create: '新建',
-                    edit: '编辑',
-                    run: '构建'
-                },
                 deploy_env: ['test','stagging','pre','prod'],
                 code_branch: ['master','dev','test'],
             }
@@ -148,19 +142,16 @@
 
             handleCreate() {
                 this.reseRowdata();
-                this.dialogStatus = 'create';
                 this.addForm = true;
             },
 
             handleEdit(row) {
                 this.rowdata = Object.assign({}, row);
-                this.dialogStatus = 'edit';
                 this.editForm = true;
             },
 
             handleRun(row) {
                 this.rowdata = Object.assign({}, row);
-                this.dialogStatus = 'run';
                 this.runForm = true;
             },
             reseRowdata() {

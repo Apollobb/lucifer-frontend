@@ -40,7 +40,7 @@
                 </el-pagination>
             </div>
         </el-card>
-        <el-dialog title="新建角色对象" :visible.sync="addGroup" size="tiny">
+        <el-dialog :visible.sync="addGroup" size="tiny">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="角色名" prop="name">
                     <el-input v-model="ruleForm.name"></el-input>

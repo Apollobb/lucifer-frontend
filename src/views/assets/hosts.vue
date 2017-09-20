@@ -3,7 +3,7 @@
         <el-card>
             <div class="head-lavel">
                 <div class="table-button">
-                    <el-button type="info" icon="plus" @click="handleCreate">新建项目</el-button>
+                    <el-button type="info" icon="plus" @click="handleCreate">新建主机</el-button>
                 </div>
                 <div class="table-search">
                     <el-input
@@ -84,10 +84,10 @@
             </div>
         </el-card>
 
-        <el-dialog :title="textMap[dialogStatus]" :visible.sync="addForm" size="small">
+        <el-dialog :visible.sync="addForm" size="small">
             <add-host @DialogStatus="getDialogStatus"></add-host>
         </el-dialog>
-        <el-dialog :title="textMap[dialogStatus]" :visible.sync="editForm" size="small">
+        <el-dialog :visible.sync="editForm" size="small">
             <edit-host :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-host>
         </el-dialog>
     </div>
@@ -126,12 +126,6 @@
                 addForm: false,
                 editForm: false,
                 rowdata: {},
-                dialogStatus: '',
-                textMap: {
-                    create: '新建',
-                    edit: '编辑',
-                    run: '构建'
-                },
             }
         },
 

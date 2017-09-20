@@ -3,7 +3,7 @@
         <el-card>
             <div class="head-lavel">
                 <div class="table-button">
-                    <el-button type="info" icon="plus" @click="addGroup=true">新建项目组</el-button>
+                    <el-button type="info" icon="plus" @click="addGroup=true">新建用户组</el-button>
                 </div>
                 <div class="table-search">
                     <el-input
@@ -40,7 +40,7 @@
                 </el-pagination>
             </div>
         </el-card>
-        <el-dialog title="新建项目组" :visible.sync="addGroup" size="tiny">
+        <el-dialog :visible.sync="addGroup" size="tiny">
             <add-group @formdata="addGroupSubmit"></add-group>
         </el-dialog>
         <el-dialog :visible.sync="viewGroup" size="tiny">

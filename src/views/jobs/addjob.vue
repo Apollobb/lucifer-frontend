@@ -8,9 +8,9 @@
                 <el-option v-for="item in jobs_type" :key="item.id" :value="item"></el-option>
             </el-select>
         </el-form-item>
-        <div>
+        <el-form-item label="选择主机" prop="hosts">
             <sesect-hosts :selecthost="rowdata.hosts" @gethosts="getHosts"></sesect-hosts>
-        </div>
+        </el-form-item>
         <el-form-item label="项目分组" prop="group">
             <el-select v-model="rowdata.group" placeholder="请选择项目分组">
                 <el-option v-for="item in groups" :key="item.name" :value="item.name"></el-option>
@@ -77,6 +77,9 @@
                     ],
                     deploy_script: [
                         {required: true, message: '请填写发布脚步', trigger: 'blur'}
+                    ],
+                    hosts: [
+                        {required: true, type: 'array', message: '请选择主机', trigger: 'change'},
                     ]
                 },
                 jobs_type: ['php', 'python', 'java', 'nodejs'],
