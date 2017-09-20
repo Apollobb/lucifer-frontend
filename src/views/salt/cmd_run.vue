@@ -7,12 +7,10 @@
             <el-form-item label="命令列表">
                 <el-button type="danger" size="small" v-for="item in commands" :key="item" @click="changeCmd(item.cmd)">
                     {{item.name}}
-
-
                 </el-button>
             </el-form-item>
             <el-form-item label="执行命令" prop="cmd">
-                <el-input v-model="ruleForm.cmd" placeholder="防止恶意命令，暂时禁止直接输入" disabled></el-input>
+                <el-input v-model="ruleForm.cmd" placeholder="防止恶意命令，暂时禁止直接输入"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="postForm('ruleForm')">执行</el-button>
@@ -128,7 +126,6 @@
                 console.log('the websocket on ' + self.ws.url);
                 self.ws.onmessage = function (e) {
                     self.results.push(e.data);
-                    console.log(self.results);
                 };
             }
         }
