@@ -14,7 +14,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="postForm('ruleForm')">执行</el-button>
-                <el-button type="success" @click="history()">查看历史</el-button>
+                <el-button type="success" @click="this.viewForm=true">查看历史</el-button>
             </el-form-item>
         </el-form>
         <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
@@ -86,7 +86,7 @@
                     {name: '防火墙', cmd: 'iptables -I INPUT -p tcp -j DORP'},
                 ],
                 denycmd: ['rm', 'rf', 'shutdown', 'reboot', 'init', 'halt', 'rmdir', 'mkdir', 'iptables', 'mv', 'wget', 'mk', '>', 'dev', '&', 'dd', '^'],
-                ws_stream: '/cmdrun',
+                ws_stream: '/salt/cmdrun/',
                 ws: '',
             }
         },
@@ -113,9 +113,6 @@
             },
             changeCmd(cmd) {
                 this.ruleForm.cmd = cmd
-            },
-            history() {
-                this.viewForm = true
             },
             wsInit() {
                 let self = this;

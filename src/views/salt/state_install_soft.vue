@@ -22,7 +22,7 @@
         </el-form>
         <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
             <el-collapse-item title="运行日志" :name="status">
-                即将安装的软件：<span class="select">{{softname}}</span>
+                即将安装的软件：<span class="select">{{ruleForm.sls}}</span>
                 安装的服务器：<span v-for="item in ruleForm.hosts" class="select">{{item}}</span>
             </el-collapse-item>
         </el-collapse>
@@ -30,11 +30,13 @@
 </template>
 <script>
     import sesectHosts from '../components/hosttransfer.vue'
-    import {postCmdrun} from "@/api/salt"
+    import {postState} from "@/api/salt"
+    import ViewStateInstall from './view_state_install.vue'
+    import {wsScheme, wsUrl} from '@/config'
 
     export default {
         components: {
-            sesectHosts
+            sesectHosts, ViewStateInstall
         },
 
         data() {
@@ -42,29 +44,31 @@
                 activeNames: ['open'],
                 status: 'close',
                 showlog: false,
-                softname: '',
                 ruleForm: {
+                    user: 'admin',
                     hosts: [],
-                    softname: '',
+                    sls: '',
+                    log_file: ''
                 },
                 results: [],
                 btns: ['zabbix', 'nginx', 'python', 'tomcat', 'php'],
-            };
+                ws_stream: '/salt/state_install/',
+                ws: '',
+            }
         },
 
         created() {
+            this.wsInit();  //ws 初始化
         },
         methods: {
             postForm(formName) {
                 this.status = 'open';
                 this.showlog = true;
+                this.results = [];
+                this.ruleForm.log_file = this.ruleForm.sls + '_' + (new Date()).getTime() + '.log';
                 this.$refs.ruleForm.validate(valid => {
                     if (valid) {
-                        postCmdrun(this.ruleForm).then(response => {
-                            this.results = response.data;
-                        }).catch(error => {
-                            console.log(error);
-                        });
+                        this.ws.send(JSON.stringify(this.ruleForm));
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -75,7 +79,18 @@
                 this.ruleForm.hosts = data
             },
             selectSoft(data) {
-                this.softname = data
+                this.ruleForm.sls = data
+            },
+            wsInit() {
+                let self = this;
+                self.ws = new WebSocket(wsScheme + wsUrl + self.ws_stream);
+                self.ws.onopen = function open() {
+                    console.log('WebSockets connection created.');
+                };
+                console.log('the websocket on ' + self.ws.url);
+                self.ws.onmessage = function (e) {
+                    self.results.push(e.data);
+                };
             }
         }
     }

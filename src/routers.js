@@ -63,7 +63,7 @@ export const routes = [
         meta: {requiresAuth: true},
         children: [
             {path: 'cmd_run', component: require('@/views/salt/cmd_run'), name: '执行命令'},
-            {path: 'install_soft', component: require('@/views/salt/install_soft'), name: '部署软件'},
+            {path: 'install_soft', component: require('@/views/salt/state_install_soft'), name: '部署软件'},
         ]
     },
     // {

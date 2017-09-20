@@ -55,4 +55,5 @@ module.exports = {
 
     //salt
     saltcmdrun: `${url}/api/saltcmdrun/`,
+    saltstate: `${url}/api/saltstate/`,
 };

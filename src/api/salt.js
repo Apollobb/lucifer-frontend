@@ -17,3 +17,20 @@ export function getCmdrun(query) {
         params: query
     });
 }
+
+// state
+export function postState(data) {
+  return fetch({
+    url: apiURL.saltstate,
+    method: 'post',
+    data
+  });
+}
+
+export function getState(query) {
+    return fetch({
+        url: apiURL.saltstate,
+        method: 'get',
+        params: query
+    });
+}
