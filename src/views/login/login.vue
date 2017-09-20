@@ -7,7 +7,7 @@
                      class="card-box login-form">
                 <h3 class="title">Lucifer运维系统</h3>
                 <el-form-item prop="username">
-                    <span class="svg-container"><icon name="user"></icon></span>
+                    <span class="svg-container"><icon class="user-icon" name="user"></icon></span>
                     <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on"
                               placeholder="用户名"></el-input>
                 </el-form-item>
@@ -166,7 +166,7 @@
             color: #889aa4;
         }
         .user-icon {
-            margin-right: 2px;
+            margin-left: 4px;
         }
 
         .title {

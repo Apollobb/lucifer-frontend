@@ -1,5 +1,6 @@
 html {
-    background: url('../../assets/bg.jpg');
+    background: url('../../assets/bg/bg5.jpg');
+    background-size:cover;
 }
 
 .el-menu--dark {
