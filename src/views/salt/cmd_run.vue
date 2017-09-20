@@ -88,18 +88,8 @@
                     {name: '防火墙', cmd: 'iptables -I INPUT -p tcp -j DORP'},
                 ],
                 denycmd: ['rm', 'rf', 'shutdown', 'reboot', 'init', 'halt', 'rmdir', 'mkdir', 'iptables', 'mv', 'wget', 'mk', '>', 'dev', '&', 'dd', '^'],
-                ws: new WebSocket(wsScheme + wsUrl),
-                wsmsg: {
-                    stream: "cmdrun",
-                    payload: {
-                        action: "create",
-                        data: {
-                            hosts: [],
-                            cmd: 'ls /tmp',
-                            user: 'admin'
-                        }
-                    }
-                }
+                ws_stream: '/cmdrun',
+                ws: '',
             }
         },
 
@@ -110,15 +100,10 @@
             postForm(formName) {
                 this.status = 'open';
                 this.showlog = true;
+                this.results = [];
                 this.$refs.ruleForm.validate(valid => {
                     if (valid) {
-                        this.wsInit();  //ws 初始化
-                        this.ws.send(JSON.stringify(this.wsmsg));
-//                        postCmdrun(this.ruleForm).then(response => {
-//                            this.results = response.data;
-//                        }).catch(error => {
-//                            console.log(error);
-//                        });
+                        this.ws.send(JSON.stringify(this.ruleForm));
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -135,11 +120,15 @@
                 this.viewForm = true
             },
             wsInit() {
-                this.ws.onopen = function open() {
+                let self = this;
+                self.ws = new WebSocket(wsScheme + wsUrl + self.ws_stream);
+                self.ws.onopen = function open() {
                     console.log('WebSockets connection created.');
                 };
-                this.ws.onmessage = function (e) {
-                    console.log(e.data)
+                console.log('the websocket on ' + self.ws.url);
+                self.ws.onmessage = function (e) {
+                    self.results.push(e.data);
+                    console.log(self.results);
                 };
             }
         }
