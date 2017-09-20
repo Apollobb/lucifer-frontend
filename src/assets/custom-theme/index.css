@@ -14,16 +14,15 @@ html {
     border-radius: 5px!important;
 }
 
-.sidebar-container {
-    right: -70px;  /*可控制白边 -70px */
-}
-
 .el-submenu__title{
     padding-left: 28px!important;
     width: 200px!important;
     font-size: 16px;
 }
 
+.el-menu-item.is-active {
+    border-right: solid #58ff28 2px;
+}
 /*!* 表格透明 *!*/
 /*.el-table {*/
     /*background-color: transparent;  !*透明*!*/
