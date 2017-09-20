@@ -1,20 +1,18 @@
 <template xmlns="http://www.w3.org/1999/html">
     <el-card class="runcmd">
-        <el-card class="software">
-            <div slot="header" class="clearfix">
-                <span>选择需要安装的软件</span>
-                (<span style="color: red">黑色代表被选中</span>)
-            </div>
-            <el-row class="software">
-                <el-col :span="4" class='text-center' v-for="item in btns" :key="item">
-                    <el-button class="pan-btn yellow-btn" @click="selectSoft(item)">{{item}}</el-button>
-                </el-col>
-            </el-row>
-        </el-card>
-        <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="ruleForm">
-            <div>
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="选择主机" prop="hosts">
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
-            </div>
+            </el-form-item>
+            <el-form-item label="安装的软件" prop="sls">
+                <el-card class="software">
+                    <el-row class="software">
+                        <el-col :span="4" class='text-center' v-for="item in btns" :key="item">
+                            <el-button class="pan-btn yellow-btn" @click="selectSoft(item)">{{item}}</el-button>
+                        </el-col>
+                    </el-row>
+                </el-card>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="postForm('ruleForm')">开始安装</el-button>
                 <el-button v-show="showlog" type="success">安装中</el-button>
@@ -24,6 +22,7 @@
             <el-collapse-item title="运行日志" :name="status">
                 即将安装的软件：<span class="select">{{ruleForm.sls}}</span>
                 安装的服务器：<span v-for="item in ruleForm.hosts" class="select">{{item}}</span>
+                <p v-for="item in results" :key="item">{{item}}</p>
             </el-collapse-item>
         </el-collapse>
     </el-card>
@@ -49,6 +48,15 @@
                     hosts: [],
                     sls: '',
                     log_file: ''
+                },
+
+                rules: {
+                    sls: [
+                        {required: true, message: '请选择安装软件', trigger: 'blur'},
+                    ],
+                    hosts: [
+                        {required: true, type: 'array', message: '请选择主机', trigger: 'change'},
+                    ]
                 },
                 results: [],
                 btns: ['zabbix', 'nginx', 'python', 'tomcat', 'php'],
@@ -79,7 +87,7 @@
                 this.ruleForm.hosts = data
             },
             selectSoft(data) {
-                this.ruleForm.sls = data
+                this.ruleForm.sls = data;
             },
             wsInit() {
                 let self = this;
@@ -98,13 +106,11 @@
 
 <style lang='scss'>
     .software {
-        margin: 0 30px;
         .pan-btn {
-            padding: 14px;
-            margin-right: 0;
+            padding: 12px;
             &:focus {
-                color: #ffffff;
-                background: #000000;
+                color: #ffffff!important;
+                background: #000000!important;
             }
         }
     }

@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div class="item-title">选择主机</div>
         <div class="host-select">
             <el-transfer
                     v-model="value"
@@ -56,23 +55,6 @@
 </script>
 
 <style>
-    .item-title {
-        font-weight: 600;
-        text-align: right;
-        vertical-align: middle;
-        float: left;
-        font-size: 14px;
-        color: #48576a;
-        line-height: 1;
-        padding: 11px 9px;
-        margin-left: 25px;
-        box-sizing: border-box;
-    }
-
-    .host-select {
-        margin-bottom: 20px;
-    }
-
     .transfer-footer {
         margin-left: 20px;
         padding: 6px 5px;

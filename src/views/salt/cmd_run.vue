@@ -1,9 +1,9 @@
 <template xmlns="http://www.w3.org/1999/html">
     <el-card class="runcmd">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <div>
+            <el-form-item label="选择主机" prop="hosts">
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
-            </div>
+            </el-form-item>
             <el-form-item label="命令列表">
                 <el-button type="danger" size="small" v-for="item in commands" :key="item" @click="changeCmd(item.cmd)">
                     {{item.name}}
@@ -69,6 +69,9 @@
                     cmd: [
                         {required: true, message: '请输入命令', trigger: 'blur'},
                         {validator: cmdRule, trigger: 'blur'}
+                    ],
+                    hosts: [
+                        {required: true, type: 'array', message: '请选择主机', trigger: 'change'},
                     ]
                 },
                 results: [],
@@ -109,7 +112,7 @@
                 });
             },
             getHosts(data) {
-                this.ruleForm.hosts = data
+                this.ruleForm.hosts = data;
             },
             changeCmd(cmd) {
                 this.ruleForm.cmd = cmd
