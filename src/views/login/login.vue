@@ -1,6 +1,5 @@
 <template>
     <div id="menu">
-        <canvas id="canvas" class="canvas"></canvas>
         <div class="login-container">
             <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left"
                      label-width="0px"
@@ -86,14 +85,11 @@
         margin-bottom: 5px;
     }
 
-    .canvas {
-        position: fixed;
-        z-index: -1;
-    }
-
     .login-container {
         @include relative;
         height: 100vh;
+        background: url('../../assets/bg/bg2.jpg');
+        background-size:cover;
 
         input:-webkit-autofill {
             -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
