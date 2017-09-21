@@ -14,7 +14,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="postForm('ruleForm')">执行</el-button>
-                <el-button type="success" @click="this.viewForm=true">查看历史</el-button>
+                <el-button type="success" @click="viewForm=true">查看历史</el-button>
             </el-form-item>
         </el-form>
         <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
