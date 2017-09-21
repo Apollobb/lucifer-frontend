@@ -31,7 +31,7 @@
     import sesectHosts from '../components/hosttransfer.vue'
     import {postState} from "@/api/salt"
     import ViewStateInstall from './view_state_install.vue'
-    import {wsScheme, wsUrl} from '@/config'
+    import {ws_url} from '@/config'
 
     export default {
         components: {
@@ -91,7 +91,7 @@
             },
             wsInit() {
                 let self = this;
-                self.ws = new WebSocket(wsScheme + wsUrl + self.ws_stream);
+                self.ws = new WebSocket(ws_url + self.ws_stream);
                 self.ws.onopen = function open() {
                     console.log('WebSockets connection created.');
                 };

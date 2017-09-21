@@ -17,11 +17,11 @@ if (process.env.NODE_ENV === 'production') {
 
 //接口API根地址
 const url = CONFIG.apiUrl;
+const ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 
 module.exports = {
     apiUrl: url,
-    wsScheme: 'ws://',  // or wss
-    wsUrl: rest_url + ":8000",
+    ws_url: ws_scheme + "://" + rest_url + ":8000",
 
     //数据分页限制
     LIMIT: 10,
