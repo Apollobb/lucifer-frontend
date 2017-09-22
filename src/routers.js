@@ -64,6 +64,7 @@ export const routes = [
         children: [
             {path: 'cmd_run', component: require('@/views/salt/cmd_run'), name: '执行命令'},
             {path: 'install_soft', component: require('@/views/salt/state_install_soft'), name: '部署软件'},
+            {path: 'iptables', component: require('@/views/salt/iptables'), name: '防火墙'},
         ]
     },
     // {

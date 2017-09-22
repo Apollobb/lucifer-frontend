@@ -116,7 +116,7 @@
                         return false;
                     }
                 });
-                this.$emit('getedit', false);
+                this.$emit('DialogStatus', false);
             },
 
             resetForm(formName) {

@@ -14,7 +14,7 @@
                     <el-dropdown-item @click.native="changeava=true">
                         修改头像
                     </el-dropdown-item>
-                    <el-dropdown-item @click.native="changepw=true">
+                    <el-dropdown-item @click.native="changepw=true" disabled>
                         修改密码
                     </el-dropdown-item>
                     <el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span>

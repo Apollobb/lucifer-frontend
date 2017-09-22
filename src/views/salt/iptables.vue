@@ -4,28 +4,27 @@
             <el-form-item label="选择主机" prop="hosts">
                 <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
             </el-form-item>
-            <el-form-item label="安装的软件" prop="sls">
-                <el-card class="software">
-                    <el-row class="software">
-                        <el-col :span="4" class='text-center' v-for="item in btns" :key="item">
-                            <el-button class="pan-btn yellow-btn" @click="selectSoft(item)">{{item}}</el-button>
-                        </el-col>
-                    </el-row>
-                </el-card>
-            </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="postForm('ruleForm')">开始安装</el-button>
-                <el-button v-show="showlog" type="success">安装中</el-button>
+                <el-button type="danger" @click="postForm('ruleForm')">修改iptabels</el-button>
+                <el-button type="primary" @click="getForm('ruleForm')">预览iptabels</el-button>
             </el-form-item>
         </el-form>
-        <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
-            <el-collapse-item title="运行日志" :name="status">
-                即将安装的软件：<span class="select">{{ruleForm.sls}}</span>
-                安装的服务器：<span v-for="item in ruleForm.hosts" class="select">{{item}}</span>
-                <span style="color: #ff1324">(下面打印后端的测试日志)</span>
-                <p v-for="item in results" :key="item">{{item}}</p>
-            </el-collapse-item>
-        </el-collapse>
+        <el-dialog :visible.sync="viewForm" size="small">
+            <div class="runlog">
+                <p style="color: white">服务器：<span v-for="item in ruleForm.hosts" class="select">{{item}}</span></p>
+                <el-card>
+                    <pre v-for="item in results" :key="item">{{item}}</pre>
+                </el-card>
+            </div>
+        </el-dialog>
+        <el-dialog :visible.sync="editForm" size="small">
+            <div class="runlog">
+                <p style="color: white">服务器：<span v-for="item in ruleForm.hosts" class="select">{{item}}</span></p>
+                <el-card>
+                    <mavon-editor default_open='edit' v-model="results" :toolbars="toolbars"/>
+                </el-card>
+            </div>
+        </el-dialog>
     </el-card>
 </template>
 <script>
@@ -33,36 +32,43 @@
     import {postState} from "@/api/salt"
     import ViewStateInstall from './view_state_install.vue'
     import {ws_url} from '@/config'
+    import ElCard from "../../../node_modules/element-ui/packages/card/src/main";
+    import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
 
     export default {
         components: {
-            sesectHosts, ViewStateInstall
+            ElInput, ElCard, sesectHosts, ViewStateInstall
         },
 
         data() {
             return {
                 activeNames: ['open'],
                 status: 'close',
-                showlog: false,
+                viewForm: false,
+                editForm: false,
                 ruleForm: {
-                    user: 'admin',
-                    hosts: [],
-                    sls: '',
-                    log_file: ''
+                    action: 'view',
+                    data: {
+                        user: 'admin',
+                        hosts: [],
+                        rule: '',
+                        filename: 'iptables'
+                    }
                 },
-
                 rules: {
-                    sls: [
-                        {required: true, message: '请选择安装软件', trigger: 'blur'},
-                    ],
                     hosts: [
                         {required: true, type: 'array', message: '请选择主机', trigger: 'change'},
+                    ],
+                    rule: [
+                        {required: true, message: '请填写规则', trigger: 'blur'},
                     ]
                 },
-                results: [],
-                btns: ['zabbix', 'nginx', 'python', 'tomcat', 'php'],
-                ws_stream: '/salt/state_install/',
+                results: '',
+                ws_stream: '/salt/viewfile/',
                 ws: '',
+                toolbars: {
+                    subfield: true, // 是否需要分栏
+                },
             }
         },
 
@@ -72,11 +78,23 @@
         methods: {
             postForm(formName) {
                 this.status = 'open';
-                this.showlog = true;
                 this.results = [];
-                this.ruleForm.log_file = this.ruleForm.sls + '_' + (new Date()).getTime() + '.log';
                 this.$refs.ruleForm.validate(valid => {
                     if (valid) {
+                        this.editForm = true;
+                        this.ws.send(JSON.stringify(this.ruleForm));
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            getForm(formName) {
+                this.status = 'open';
+                this.results = [];
+                this.$refs.ruleForm.validate(valid => {
+                    if (valid) {
+                        this.viewForm = true;
                         this.ws.send(JSON.stringify(this.ruleForm));
                     } else {
                         console.log('error submit!!');
@@ -86,9 +104,6 @@
             },
             getHosts(data) {
                 this.ruleForm.hosts = data
-            },
-            selectSoft(data) {
-                this.ruleForm.sls = data;
             },
             wsInit() {
                 let self = this;
@@ -106,16 +121,6 @@
 </script>
 
 <style lang='scss'>
-    .software {
-        .pan-btn {
-            padding: 12px;
-            &:focus {
-                color: #ffffff!important;
-                background: #000000!important;
-            }
-        }
-    }
-
     .runlog {
         margin: 25px;
         .select {
