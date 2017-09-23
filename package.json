@@ -36,7 +36,7 @@
     "vue-particles": "^1.0.9",
     "vue-router": "2.5.3",
     "vuedraggable": "^2.13.1",
-    "vuex": "2.3.1"
+    "vuex": "2.3.1",
   },
   "devDependencies": {
     "autoprefixer": "7.1.1",
@@ -94,5 +94,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "optionalDependencies": {
+    "utf-8-validate": "^3.0.3"
+  }
 }

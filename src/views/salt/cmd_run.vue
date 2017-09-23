@@ -19,7 +19,7 @@
         </el-form>
         <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
             <el-collapse-item title="运行日志" :name="status">
-                <p v-for="item in results" :key="item">{{item}}</p>
+                <p v-for="line in results" v-html="line"></p>
             </el-collapse-item>
         </el-collapse>
 
@@ -36,6 +36,7 @@
 
     export default {
         components: {sesectHosts, ViewCmdrun},
+
 
         data() {
             const cmdRule = (rule, value, callback) => {
@@ -97,11 +98,12 @@
         created() {
             this.wsInit();  //ws 初始化
         },
+
         methods: {
             postForm(formName) {
                 this.status = 'open';
                 this.showlog = true;
-                this.results = [];
+                this.results = this.rawLines = [];
                 this.$refs.ruleForm.validate(valid => {
                     if (valid) {
                         this.ws.send(JSON.stringify(this.ruleForm));
@@ -120,11 +122,11 @@
             wsInit() {
                 let self = this;
                 self.ws = new WebSocket(ws_url + self.ws_stream);
-                self.ws.onopen = function open() {
+                self.ws.onopen = () => {
                     console.log('WebSockets connection created.');
                 };
                 console.log('the websocket on ' + self.ws.url);
-                self.ws.onmessage = function (e) {
+                self.ws.onmessage = (e) => {
                     self.results.push(e.data);
                 };
             }
