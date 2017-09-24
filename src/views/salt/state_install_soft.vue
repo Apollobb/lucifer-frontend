@@ -124,10 +124,6 @@
         }
     }
 
-    .shan {
-        text-decoration: blink
-    }
-
     .ruleForm {
         margin-top: 20px;
     }

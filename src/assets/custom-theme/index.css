@@ -73,3 +73,7 @@ html {
     word-spacing: 5px;
     border-radius: 5px;
 }
+
+.el-textarea.is-disabled .el-textarea__inner {
+    color: #0e0e0e;
+}

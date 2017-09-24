@@ -103,7 +103,7 @@
             postForm(formName) {
                 this.status = 'open';
                 this.showlog = true;
-                this.results = this.rawLines = [];
+                this.results = [];
                 this.$refs.ruleForm.validate(valid => {
                     if (valid) {
                         this.ws.send(JSON.stringify(this.ruleForm));
@@ -124,7 +124,7 @@
                 self.ws = new WebSocket(ws_url + self.ws_stream);
                 if (self.ws.readyState == WebSocket.OPEN) self.ws.onopen();
                 self.ws.onmessage = (e) => {
-                    window.scroll(0, 10000);
+                    window.scroll(0, 20000);
                     self.results.push(e.data);
                 };
             }
@@ -141,9 +141,5 @@
 
     .runlog {
         margin: 25px;
-    }
-
-    .shan {
-        text-decoration: blink
     }
 </style>
