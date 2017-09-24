@@ -96,7 +96,6 @@
                 self.ws.onopen = function open() {
                     console.log('WebSockets connection created.');
                 };
-                console.log('the websocket on ' + self.ws.url);
                 self.ws.onmessage = function (e) {
                     self.results.push(e.data);
                 };

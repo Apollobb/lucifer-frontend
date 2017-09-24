@@ -122,10 +122,7 @@
             wsInit() {
                 let self = this;
                 self.ws = new WebSocket(ws_url + self.ws_stream);
-                self.ws.onopen = () => {
-                    console.log('WebSockets connection created.');
-                };
-                console.log('the websocket on ' + self.ws.url);
+                if (self.ws.readyState == WebSocket.OPEN) self.ws.onopen();
                 self.ws.onmessage = (e) => {
                     self.results.push(e.data);
                 };
