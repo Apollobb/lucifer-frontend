@@ -41,6 +41,10 @@ Object.keys(filters).forEach(key => {
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
+/* 自动滚动到底部 */
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll);
+
 
 // 生产环境错误日志
 if (process.env === 'production') {

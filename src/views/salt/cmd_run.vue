@@ -19,7 +19,7 @@
         </el-form>
         <el-collapse v-show="showlog" v-model="activeNames" class="runlog">
             <el-collapse-item title="运行日志" :name="status">
-                <p v-for="line in results" v-html="line"></p>
+                <p v-for="item in results" :key="item">{{item}}</p>
             </el-collapse-item>
         </el-collapse>
 
@@ -113,8 +113,8 @@
                     }
                 });
             },
-            getHosts(data) {
-                this.ruleForm.hosts = data;
+            getHosts(hosts) {
+                this.ruleForm.hosts = hosts;
             },
             changeCmd(cmd) {
                 this.ruleForm.cmd = cmd
@@ -124,6 +124,7 @@
                 self.ws = new WebSocket(ws_url + self.ws_stream);
                 if (self.ws.readyState == WebSocket.OPEN) self.ws.onopen();
                 self.ws.onmessage = (e) => {
+                    window.scroll(0, 10000);
                     self.results.push(e.data);
                 };
             }
