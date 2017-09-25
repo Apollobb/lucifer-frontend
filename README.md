@@ -1,4 +1,4 @@
-# vue-element-admin #
+# Lucifer运维平台 #
 
 [![vue](https://img.shields.io/badge/vue-2.4.2-brightgreen.svg)](https://github.com/vuejs/vue)
 [![element-ui](https://img.shields.io/badge/element--ui-1.4.2-brightgreen.svg)](https://github.com/ElemeFE/element)
@@ -81,13 +81,13 @@
 ## 效果图
 
 ### 登录
-![enter image description here](https://github.com/itimor/lucifer-frontend/blob/master/gifs/login.gif)
+![login](https://github.com/itimor/lucifer-frontend/blob/master/gifs/login.gif)
 
 ### 执行命令实时查看结果
-![enter image description here](https://github.com/itimor/lucifer-frontend/blob/master/gifs/cmdrun.gif)
+![cmdrun](https://github.com/itimor/lucifer-frontend/blob/master/gifs/cmdrun.gif)
 
 ### 在线部署软件
-![enter image description here](https://github.com/itimor/lucifer-frontend/blob/master/gifs/soft_install.gif)
+![soft_install](https://github.com/itimor/lucifer-frontend/blob/master/gifs/soft_install.gif)
 
 ### 在线编辑配置
-![enter image description here](https://github.com/itimor/lucifer-frontend/blob/master/gifs/editfile.gif)
+![editfile](https://github.com/itimor/lucifer-frontend/blob/master/gifs/editfile.gif)
