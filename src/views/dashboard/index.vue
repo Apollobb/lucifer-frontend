@@ -1,7 +1,6 @@
 <template>
     <div class="dashboard-editor-container">
-
-        <a href="https://github.com/itimor/frontend.git" target="_blank" class="github-corner"
+        <a href="https://github.com/itimor/lucifer-frontend.git" target="_blank" class="github-corner"
            aria-label="View source on Github">
             <svg width="80" height="80" viewBox="0 0 250 250"
                  style="fill:#4AB7BD; color:#fff; position: absolute; top: 50px; border: 0; right: 0;"
