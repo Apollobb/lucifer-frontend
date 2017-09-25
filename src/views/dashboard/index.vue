@@ -39,13 +39,13 @@
             <el-col :span="6">
                 <el-card class="box-card">
                     <div slot="header" class="box-card-header">
-
+                        <p>Admin</p>
+                        <p>超级管理员</p>
+                        <p>性别：不详</p>
                     </div>
                     <div class="info-item">
-
                     </div>
                     <div class="info-item">
-
                     </div>
                 </el-card>
             </el-col>

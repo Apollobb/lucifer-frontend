@@ -71,14 +71,17 @@
                 this.msg.data = this.ruleForm;
                 this.msg.stream = 'write';
                 this.ws.send(JSON.stringify(this.msg));
+                this.$message.success('保存成功');
             },
             getForm(formName) {
                 this.status = 'open';
                 this.results = [];
+                this.ws.onmessage = (e) => {this.results += e.data;};
                 this.$refs.ruleForm.validate(valid => {
                     if (valid) {
                         this.editForm = true;
                         this.msg.data = this.ruleForm;
+                        this.msg.stream = 'read';
                         this.ws.send(JSON.stringify(this.msg));
                     } else {
                         console.log('error submit!!');
@@ -95,9 +98,6 @@
                 let self = this;
                 self.ws = new WebSocket(ws_url + self.ws_stream);
                 if (self.ws.readyState == WebSocket.OPEN) self.ws.onopen();
-                self.ws.onmessage = (e) => {
-                    self.results += e.data;
-                };
             }
         }
     }
