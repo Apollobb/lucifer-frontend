@@ -4,7 +4,7 @@
 [![element-ui](https://img.shields.io/badge/element--ui-1.4.2-brightgreen.svg)](https://github.com/ElemeFE/element)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/itimor/lucifer-frontend/blob/master/LICENSE)
 
-**Lucifer运维平台是采用的前后端分离开发，本项目是lucifer运维平台的前端**
+**Lucifer运维平台是采用的前后端分离开发，本项目是lucifer运维平台的前端，[点我到后端](https://github.com/itimor/lucifer)**
 
 **注意：该项目目前使用element-ui@1.4.2版本，所以最低兼容 Vue 2.3.0**
 **该项目不支持低版本游览器(如ie)**
