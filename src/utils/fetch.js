@@ -4,6 +4,7 @@ import store from '../store'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+// axios.defaults.withCredentials = true;   //使用session
 
 // 创建axios实例
 const service = axios.create({
@@ -19,6 +20,7 @@ service.interceptors.request.use(config => {
         config.headers.Authorization = 'token ' + token; // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
         config.headers['X-CSRFToken'] = token; //加上这个，解决build后 post出现403错误
     }
+    config.headers['Content-Type'] = "application/json;charset=utf-8";   //使用session
     return config;
 }, error => {
   // Do something with request error
